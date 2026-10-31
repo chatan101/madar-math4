@@ -449,6 +449,114 @@ table.pv{border-collapse:collapse;margin-inline:auto;background:#fff;transform:r
 .keypad.k4{grid-template-columns:repeat(6,minmax(0,1fr))}
 @media (max-width:900px){.cover,.pv-wrap{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:620px){.learn-top{grid-template-columns:minmax(0,1fr)}.silos{max-width:170px}.ch-title{font-size:46px}.keypad.k4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* ---------- v2: teacher-led regrouping ---------- */
+.ltabs{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 14px}
+.ltabs button{border:1px solid var(--line);background:var(--bg2);color:var(--muted);border-radius:14px;padding:6px 14px;font-size:14px;font-weight:600;text-align:start;line-height:1.35}
+.ltabs button small{display:block;font-weight:500;font-size:11.5px;opacity:.85}
+.ltabs button[aria-selected="true"]{background:var(--panel);color:var(--fg);border-color:var(--accent)}
+.lpanel[hidden]{display:none}
+
+/* teacher coach bubble */
+.coach{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1.5px solid #cfe3f7;border-radius:18px;padding:12px 14px;color:#1d3557;box-shadow:0 10px 24px -18px rgba(29,53,87,.6)}
+.coach .av{flex:none;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,#f4b43c);display:grid;place-items:center;box-shadow:0 3px 0 #c98a14}
+.coach .av svg{width:30px;height:30px}
+.coach .who{font-size:12px;font-weight:700;color:#1f6fd6;display:block;margin-bottom:2px}
+.coach .say{font-size:16px;line-height:1.85;margin:0;min-height:1.85em}
+.coach .say b{color:#c0392b}
+.coach.warn{border-color:#f3b0b9;background:#fff6f7}
+.coach.good{border-color:#a8e0c4;background:#f3fbf6}
+.qcard .coach{color:#1d3557}
+
+/* regrouping lab */
+.lab{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}
+.labc{background:#fff;border:1.5px solid var(--paper-line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.labc h4{margin:0;font-family:var(--f-display);font-size:16px}
+.labc p{margin:0;font-size:14px;color:var(--paper-muted)}
+.labc .btn{align-self:flex-start;padding:7px 14px;font-size:13.5px}
+.labboard{display:flex;gap:10px;justify-content:center;min-height:120px;align-items:flex-end;direction:rtl}
+.labcol{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:56px}
+.labcol .cap{font-size:12px;font-weight:600;color:var(--paper-muted)}
+.labcol .cnt{font-family:var(--f-display);font-size:22px;font-weight:800}
+
+/* chips (place-value counters) */
+.chips{display:flex;gap:6px;justify-content:center;direction:rtl;padding:10px 6px 6px;background:#f7f4ea;border:1.5px dashed #d9cfae;border-radius:14px;margin-top:10px;overflow-x:auto;min-height:150px;align-items:flex-end}
+.chips .cc{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:44px}
+.chips .stack{display:grid;grid-template-columns:repeat(2,16px);gap:3px;align-content:end;justify-content:center;min-height:16px}
+.chips .cap{font-size:11px;font-weight:600;color:#6d7891;white-space:nowrap}
+.chip{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--cc) 40%,#fff),var(--cc));box-shadow:0 2px 0 color-mix(in srgb,var(--cc) 70%,#000);animation:chipIn .35s var(--spring) both}
+.chip.out{animation:chipOut .45s var(--ease) forwards}
+.chip.lend{animation:chipLend .5s var(--ease) forwards}
+@keyframes chipIn{from{transform:scale(0)}to{transform:none}}
+@keyframes chipOut{to{transform:translateY(18px) scale(.3);opacity:0}}
+@keyframes chipLend{to{transform:translateY(-26px) scale(1.4);opacity:0}}
+.flychip{position:fixed;z-index:70;width:20px;height:20px;border-radius:50%;background:var(--cc);box-shadow:0 0 0 4px color-mix(in srgb,var(--cc) 30%,transparent);pointer-events:none;transition:left .6s var(--ease),top .6s var(--ease),transform .6s var(--ease)}
+.burst{position:fixed;z-index:69;pointer-events:none;font-family:var(--f-display);font-weight:800;font-size:18px;color:var(--cc);animation:burst .9s var(--ease) forwards}
+@keyframes burst{0%{opacity:0;transform:scale(.5)}30%{opacity:1;transform:scale(1.25)}100%{opacity:0;transform:translateY(-18px) scale(1)}}
+
+/* column widget: vertical skin (digits always run left-to-right) */
+.cw{display:flex;flex-direction:column;gap:10px;align-items:center;width:100%}
+.vgrid{display:inline-grid;direction:ltr;column-gap:4px;row-gap:2px;align-items:end;color:#24314a}
+.vgrid .vc{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:36px;border-radius:8px;transition:background .3s;padding:2px 0}
+.vgrid .vc.hl{background:color-mix(in srgb,var(--cc) 14%,transparent)}
+.vgrid .mk{display:flex;flex-direction:column-reverse;align-items:center;justify-content:flex-start;gap:2px;min-height:46px}
+.vgrid .mk span{border:1.5px solid var(--cc);color:var(--cc);border-radius:4px;padding:0 3px;font-family:var(--f-display);font-weight:700;font-size:14px;line-height:1.25;background:#fff;position:relative;animation:mkIn .5s var(--spring) both}
+.vgrid .d{font-family:var(--f-display);font-size:28px;font-weight:700;line-height:1.2;position:relative;min-height:34px}
+.vgrid .x::after,.pv .x::after{content:"";position:absolute;inset-inline:-4px;top:52%;border-top:2px solid var(--cc,#c0392b);transform:rotate(-28deg)}
+.vgrid .op{font-family:var(--f-display);font-size:28px;font-weight:700;padding-inline-start:6px;align-self:end}
+.vgrid .rl{grid-column:1/-1;border-top:2.5px solid currentColor;margin:2px 0}
+.vgrid .r .d{color:var(--cc);animation:drop .55s var(--spring) both}
+.vgrid .bx{min-width:36px;height:42px;padding:0 4px;font-size:24px}
+.vgrid .pl{font-size:10px;color:#8a94a8;text-align:center;white-space:nowrap}
+.cw-tools{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.cw-tools .btn{padding:8px 16px;font-size:14px}
+.btn.regroup{background:#d9468f;color:#fff;box-shadow:0 5px 0 #a8306b,0 14px 26px -14px #d9468f}
+.btn.regroup:active{box-shadow:0 2px 0 #a8306b}
+.pulse{animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 5px 0 #a8306b,0 0 0 0 rgba(217,70,143,.45)}50%{box-shadow:0 5px 0 #a8306b,0 0 0 10px rgba(217,70,143,0)}}
+.pv td.cur,.vgrid .vc.cur{outline:3px solid var(--accent);outline-offset:-3px}
+.pv td .bx.dim,.vgrid .bx.dim{opacity:.35;pointer-events:none}
+
+/* bar model, rounding, reverse plan */
+.bar-model{display:flex;flex-direction:column;gap:6px;width:100%;max-width:520px;margin:6px auto}
+.bm-whole{background:#dcefc6;border:1.5px solid #4aa36a;border-radius:8px;text-align:center;padding:6px;font-family:var(--f-display);font-weight:700;font-size:20px}
+.bm-parts{display:flex;gap:6px}
+.bm-parts div{border-radius:8px;text-align:center;padding:6px;font-family:var(--f-display);font-weight:700;font-size:20px;border:1.5px solid}
+.bm-a{background:#fdf3b8;border-color:#d4b52a;flex:1735}
+.bm-b{background:#fde3ef;border-color:#d9468f;flex:765;color:#a8306b}
+.round{display:inline-flex;direction:ltr;gap:2px;font-family:var(--f-display);font-weight:700;font-size:26px;align-items:flex-end}
+.round span{position:relative;padding:0 1px}
+.round .rp{color:#c0392b;border-bottom:3px solid #c0392b}
+.round .dc{color:#1f6fd6}
+.round .dc::after{content:"";position:absolute;inset:-3px -4px;border:2px solid #1f6fd6;border-radius:50%}
+.rsteps{display:flex;flex-direction:column;gap:10px;margin:8px 0}
+.rrow{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.rrow .arrow{font-size:22px;color:var(--paper-muted)}
+.rrow .why{font-size:14px;color:#1f6fd6}
+.plan4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
+.p4{border-radius:14px;padding:10px 12px;border:2px solid;background:#fff;font-size:14.5px;min-width:0}
+.p4 h4{margin:0 0 4px;font-family:var(--f-display);font-size:17px}
+.p4.a{border-color:#1f8fd6}.p4.a h4{color:#1f8fd6}
+.p4.b{border-color:#7cc242}.p4.b h4{color:#4e9a1c}
+.p4.c{border-color:#e2475b}.p4.c h4{color:#c0392b}
+.p4.d{border-color:#d9468f}.p4.d h4{color:#a8306b}
+.timeline{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;direction:rtl;margin:12px 0}
+.tnode{background:#fff;border:2px solid #4aa36a;border-radius:14px;padding:6px 12px;text-align:center;min-width:92px}
+.tnode b{display:block;font-family:var(--f-display);font-size:20px}
+.tnode small{font-size:11.5px;color:var(--paper-muted)}
+.tarrow{display:flex;flex-direction:column;align-items:center;font-size:12px;font-weight:700}
+.tarrow .f{color:#c0392b}.tarrow .r{color:#24985a}
+.tarrow i{font-style:normal;font-size:20px;line-height:1}
+.tnode.q b{color:#c0392b}
+.tnode.reveal{animation:pop .6s var(--spring) both;border-color:#24985a}
+.choicelist{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.choicelist .choice{font-size:22px;padding:10px 18px}
+.grid3{display:grid;grid-template-columns:repeat(3,auto);gap:0;direction:rtl;border:1.5px solid #4aa36a}
+.grid3 div{border:1.5px solid #4aa36a;min-width:96px;height:46px;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:20px;background:#fdf8d8}
+.grid3 .bx{width:100%;height:100%;border-radius:0;border:0}
+.helpcalc{align-self:center}
+@media (max-width:760px){.lab,.plan4{grid-template-columns:minmax(0,1fr)}}
+.chip{white-space:nowrap}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -493,15 +601,15 @@ table.pv{border-collapse:collapse;margin-inline:auto;background:#fff;transform:r
         <div class="will">
           <h3>سوفَ أتعلمُ في هذا الفصلِ</h3>
           <ol class="lessons4">
-            <li class="now"><span class="ln">الدرس (١)</span> طرحَ الأعدادِ ضمنَ الملايينِ<span class="lt">الآن</span></li>
-            <li><span class="ln">الدرس (٢)</span> تقديرَ نواتجِ الطرحِ</li>
-            <li><span class="ln">الدرس (٣)</span> الجملَ العدديةَ المفتوحةَ</li>
-            <li><span class="ln">الدرس (٤)</span> خطةَ حلِّ المسألةِ (الحلُّ العكسي)</li>
+            <li class="now" data-lesson="0"><span class="ln">الدرس (١)</span> طرحَ الأعدادِ ضمنَ الملايينِ</li>
+            <li class="now" data-lesson="1"><span class="ln">الدرس (٢)</span> تقديرَ نواتجِ الطرحِ</li>
+            <li class="now" data-lesson="2"><span class="ln">الدرس (٣)</span> الجملَ العدديةَ المفتوحةَ</li>
+            <li class="now" data-lesson="3"><span class="ln">الدرس (٤)</span> خطةَ حلِّ المسألةِ (الحلُّ العكسي)</li>
           </ol>
         </div>
         <div class="cover-cta">
           <button class="btn" data-sec="pre">الاختبارُ القبليُّ<svg><use href="#i-arrow"/></svg></button>
-          <button class="btn ghost" data-go="learn">الدرس ١: الشرح</button>
+          <button class="btn ghost" data-lesson="0">الدرس ١: الشرح</button>
         </div>
       </div>
       <div class="tanker-card">
@@ -530,69 +638,14 @@ table.pv{border-collapse:collapse;margin-inline:auto;background:#fff;transform:r
   </section>
 
   <section class="screen" id="s-learn" aria-label="ورقة الشرح">
-    <div class="paper-wrap">
-      <article class="paper" id="paper">
-        <div class="fold paper-head">
-          <span class="lesson-badge">الدرسُ ١</span>
-          <h1>طرحُ الأعدادِ ضمنَ الملايينِ</h1>
-          <span class="pref">الكتاب · ص ٤٨–٤٩</span>
-          <div class="idea" style="flex-basis:100%"><span><b>فكرةُ الدرسِ:</b> أطرحُ الأعدادَ ضمنَ الملايينِ.</span><span><b>المفرداتُ:</b> <mark>الطرحُ</mark></span></div>
-        </div>
-        <div class="fold">
-          <div class="learn-top">
-            <div class="story">
-              <span class="tag">أتعلّمُ</span>
-              <p>مخزنٌ للحبوبِ يتسعُ لـ ٥٣٨٧١٤ كيساً من الحبوبِ، خُزنَ ٢٧٨٦٢٩ كيساً من الحبوبِ. ما عددُ أكياسِ الحبوبِ المتبقيةِ لملءِ المخزنِ؟</p>
-            </div>
-            <svg class="silos" viewBox="0 0 220 130" role="img" aria-label="صوامع حبوب">
-              <g class="silo"><rect x="12" y="38" width="52" height="84" rx="4"/><path d="M12 40 L38 18 L64 40Z"/></g>
-              <g class="silo"><rect x="72" y="28" width="62" height="94" rx="4"/><path d="M72 30 L103 6 L134 30Z"/></g>
-              <g class="silo"><rect x="142" y="42" width="48" height="80" rx="4"/><path d="M142 44 L166 24 L190 44Z"/></g>
-              <g class="silo-lines"><path d="M12 60H64M12 82H64M12 104H64M72 54H134M72 78H134M72 102H134M142 64H190M142 86H190M142 108H190"/></g>
-              <path d="M0 124H220" class="ground"/>
-            </svg>
-          </div>
-        </div>
-        <div class="fold">
-          <div class="rule"><svg><use href="#i-bulb"/></svg><span>تعلمتُ سابقاً طرحَ الأعدادِ ضمنَ ٩٩٩٩، ويمكنني إجراءَ <mark>الطرحِ</mark> ضمنَ الملايينِ بالطريقةِ نفسِها.</span></div>
-        </div>
-        <div class="fold">
-          <span class="tag green">الأمثلةُ</span>
-          <div class="exline" style="margin-top:12px"><span class="exno">١</span><span id="exTitle">أجدُ عددَ أكياسِ الحبوبِ المتبقيةِ التي يتسعُ اليها المخزنُ باستعمالِ عمليةِ الطرحِ:</span></div>
-          <div class="extabs" id="extabs" role="tablist" aria-label="أمثلة الدرس">
-            <button role="tab" data-ex="0" aria-selected="true">مثال ١</button>
-            <button role="tab" data-ex="1" aria-selected="false">مثال ٢</button>
-          </div>
-          <h3 class="method" id="m1title"><b>الطريقةُ الأولى:</b> استعمالُ جدولِ القيمةِ المكانيةِ</h3>
-          <div class="pv-wrap">
-            <div class="pv-board" id="pvBoard"></div>
-            <ol class="pv-notes" id="pvNotes"></ol>
-          </div>
-          <div class="step-ctl">
-            <button class="btn" id="pvNext">المنزلةُ التاليةُ<svg><use href="#i-arrow"/></svg></button>
-            <button class="btn ghost" id="pvAll"><svg><use href="#i-play"/></svg>شغّل الحلَّ كاملاً</button>
-            <button class="btn ghost" id="pvReset">أعِد</button>
-          </div>
-          <div id="method2">
-            <h3 class="method"><b>الطريقةُ الثانيةُ:</b> استعمالُ الطرحِ العموديِّ</h3>
-            <div class="m2">
-              <div class="vbox" id="vMain"></div>
-              <div class="vcheck"><span class="vlabel">أتحقّقُ:</span><div class="vbox" id="vCheck"></div></div>
-            </div>
-            <div class="step-ctl"><button class="btn ghost" id="writeBtn">اكتب الطريقةَ الثانيةَ أمامي</button></div>
-          </div>
-          <div class="step-ctl" style="margin-top:18px;justify-content:flex-end">
-            <button class="btn" data-sec="t">إلى تمارين الدرس<svg><use href="#i-arrow"/></svg></button>
-          </div>
-        </div>
-      </article>
-    </div>
+    <div class="ltabs" id="ltabs" role="tablist" aria-label="دروس الفصل"></div>
+    <div class="paper-wrap"><article class="paper" id="paper"></article></div>
   </section>
 
   <section class="screen" id="s-play" aria-label="التمارين">
-    <div class="eyebrow">الكتاب · ص ٤٦–٥٠</div>
-    <h1>تمارينُ الفصلِ والدرسِ</h1>
-    <p class="lead">تمارين الكتاب نفسها وبترتيبها. اضغط على أي مربع لتكتب فيه. وإذا احترت، افتح تلميحاً من اللوحة الجانبية.</p>
+    <div class="eyebrow">الكتاب · ص ٤٦–٦١</div>
+    <h1>تمارينُ فصلِ الطرحِ</h1>
+    <p class="lead">تمارين الكتاب نفسها وبترتيبها، من الاختبار القبلي حتى اختبار الفصل. في كل طرحٍ تعيدُ التسميةَ بنفسك منزلةً منزلة، والمعلّم معك خطوةً بخطوة.</p>
     <div class="secs" id="secs" role="tablist" aria-label="أقسام التمارين"></div>
     <div class="play-grid">
       <div>
@@ -606,7 +659,7 @@ table.pv{border-collapse:collapse;margin-inline:auto;background:#fff;transform:r
   <section class="screen" id="s-result" aria-label="النتيجة">
     <div class="result">
       <div class="rcard">
-        <div class="eyebrow">الفصل ٣ · الدرس ١</div>
+        <div class="eyebrow">الفصل ٣ · الطرح</div>
         <h2 id="rTitle">أتممت الدرس</h2>
         <div class="stars" id="stars">
           <svg class="s" style="color:var(--accent)"><use href="#i-star"/></svg>
@@ -617,17 +670,17 @@ table.pv{border-collapse:collapse;margin-inline:auto;background:#fff;transform:r
         <p class="lead" style="text-align:center;margin-inline:auto" id="rLine"></p>
       </div>
       <div class="rcard">
-        <h3>نتيجتك في أقسام الدرس</h3>
+        <h3>نتيجتك في أقسام الفصل</h3>
         <div class="skills" id="skills"></div>
         <div class="next">
-          <div style="min-width:0"><b>الدرس التالي</b><br><span style="color:var(--muted);font-size:14px">تقديرُ نواتجِ الطرحِ · ص ٥١</span></div>
+          <div style="min-width:0"><b>الفصل التالي</b><br><span style="color:var(--muted);font-size:14px">الفصل ٤ · الإحصاء والاحتمالات · ص ٦٢</span></div>
           <button class="btn" data-go="cover" style="margin-inline-start:auto">غلاف الفصل</button>
         </div>
       </div>
     </div>
   </section>
 
-  <p style="color:var(--muted);font-size:12.5px;margin-top:28px;text-align:center">نموذج تصميمي من «مدار». الشرح والأمثلة والتمارين مطابقة لصفحات ٤٦–٥٠ من كتاب الرياضيات للصف الرابع الابتدائي.</p>
+  <p style="color:var(--muted);font-size:12.5px;margin-top:28px;text-align:center">نموذج تصميمي من «مدار». الشرح والأمثلة والتمارين مطابقة لصفحات ٤٦–٦١ (فصل الطرح كاملاً) من كتاب الرياضيات للصف الرابع الابتدائي.</p>
 </main>
 
 <script>
@@ -638,7 +691,7 @@ const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const wait=ms=>new Promise(r=>setTimeout(r,reduced?Math.min(ms,40):ms));
 let cur='cover';
 
-/* ---------- Sound: tiny synthesized UI cues ---------- */
+/* ---------- Sound ---------- */
 let actx=null, soundOn=true;
 function tone(freqs,dur=.12,type='sine',vol=.05){
   if(!soundOn)return;
@@ -648,77 +701,154 @@ function tone(freqs,dur=.12,type='sine',vol=.05){
       o.connect(g).connect(actx.destination);o.start(st);o.stop(st+dur+.03);});}catch(e){}
 }
 const sfx={tap:()=>tone([660],.06,'triangle',.03),ok:()=>tone([523,659,784],.13,'sine',.05),bad:()=>tone([233,196],.13,'triangle',.04),
-  pop:()=>tone([880],.05,'sine',.025),whoosh:()=>tone([320,480],.07,'sine',.02),write:()=>tone([1200],.03,'square',.008)};
+  pop:()=>tone([880],.05,'sine',.025),whoosh:()=>tone([320,480],.07,'sine',.02),write:()=>tone([1200],.03,'square',.008),
+  regroup:()=>tone([392,523,659],.09,'triangle',.04)};
 $('#soundBtn').addEventListener('click',e=>{soundOn=!soundOn;const b=e.currentTarget;b.innerHTML=`<svg><use href="#i-${soundOn?'sound':'mute'}"/></svg>`;b.setAttribute('aria-label',soundOn?'كتم الصوت':'تشغيل الصوت');});
 
-/* ---------- Subtraction engine: the column method the book teaches ---------- */
-const PLACE=['الآحادَ','العشراتِ','المئاتِ','آحادَ الألوفِ','عشراتِ الألوفِ','مئاتِ الألوفِ','آحادَ الملايينِ'];
-const UNIT=['آحاد','عشرات','مئات','آحاد الألوف','عشرات الألوف','مئات الألوف','ملايين'];
-const HEAD=['آحاد','عشرات','مئات','آحاد','عشرات','مئات','آحاد'];
-const COLC=['#1f6fd6','#24985a','#e0731a','#8a5cc7','#d9468f','#a87900','#0e8a8a'];
+/* ---------- Places ---------- */
+const PLACE=['الآحاد','العشرات','المئات','آحاد الألوف','عشرات الألوف','مئات الألوف','آحاد الملايين','عشرات الملايين'];
+const UNIT=['آحاد','عشرات','مئات','آلاف','عشرات ألوف','مئات ألوف','ملايين','عشرات ملايين'];
+const HEAD=['آحاد','عشرات','مئات','آحاد','عشرات','مئات','آحاد','عشرات'];
+const COLC=['#1f6fd6','#24985a','#e0731a','#8a5cc7','#d9468f','#a87900','#0e8a8a','#5b6bd6'];
+const TEACHER='<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="13" r="7" fill="#fff4d6"/><path d="M8 12c0-6 16-6 16 0-2-3-14-3-16 0z" fill="#4a3426"/><circle cx="13.3" cy="13.5" r="1.1" fill="#24314a"/><circle cx="18.7" cy="13.5" r="1.1" fill="#24314a"/><path d="M13.5 16.6c1.5 1.2 3.5 1.2 5 0" stroke="#24314a" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M6 31c0-6 4.5-9 10-9s10 3 10 9z" fill="#1f6fd6"/><path d="M14 22l2 4 2-4z" fill="#fff"/></svg>';
+const coachHTML=(id,txt)=>`<div class="coach" id="${id}"><div class="av">${TEACHER}</div><div><span class="who">المعلّم</span><p class="say">${txt||''}</p></div></div>`;
+function say(el,html,tone){if(!el)return;el.classList.remove('warn','good');if(tone)el.classList.add(tone);const p=el.querySelector('.say');p.innerHTML=html;p.animate?.([{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:reduced?1:320,easing:'ease-out'});}
+
+/* ---------- Subtraction plan: the exact column method of the book ---------- */
 const digitsOf=(x,n)=>{const d=String(x).split('').reverse().map(Number);while(d.length<n)d.push(0);return d;};
 function subPlan(a,b,n){
-  n=n||String(a).length;
+  n=Math.max(n||0,String(a).length);
   const A=digitsOf(a,n), B=digitsOf(b,n), eff=A.slice(), steps=[], res=[];
   for(let i=0;i<n;i++){
-    const ev=[];let line;
+    const before=eff[i], ev=[];let j=-1;
     if(eff[i]<B[i]){
-      let j=i+1;while(eff[j]===0)j++;
+      j=i+1;while(eff[j]===0)j++;
       eff[j]-=1;ev.push({c:j,v:eff[j]});
       for(let k=j-1;k>i;k--){ev.push({c:k,v:10});ev.push({c:k,v:9});eff[k]=9;}
-      const before=eff[i];eff[i]+=10;ev.push({c:i,v:eff[i]});res[i]=eff[i]-B[i];
-      line=`أطرحُ ${PLACE[i]}: ${ar(before)} < ${ar(B[i])} لذلك أعيدُ التسميةَ وأطرحُ ${ar(eff[i])} − ${ar(B[i])} = ${ar(res[i])} ${UNIT[i]}`;
-    }else{res[i]=eff[i]-B[i];line=`أطرحُ ${PLACE[i]}: ${ar(eff[i])} − ${ar(B[i])} = ${ar(res[i])} ${UNIT[i]}`;}
-    steps.push({ev,line});
+      eff[i]+=10;ev.push({c:i,v:eff[i]});
+    }
+    res[i]=eff[i]-B[i];
+    const line=ev.length?`أطرحُ ${PLACE[i]}: ${ar(before)} < ${ar(B[i])} لذلك أعيدُ التسميةَ وأطرحُ ${ar(eff[i])} − ${ar(B[i])} = ${ar(res[i])} ${UNIT[i]}`
+      :`أطرحُ ${PLACE[i]}: ${ar(eff[i])} − ${ar(B[i])} = ${ar(res[i])} ${UNIT[i]}`;
+    steps.push({ev,before,eff:eff[i],b:B[i],r:res[i],need:ev.length>0,j,line});
   }
   let top=n-1;while(top>0&&res[top]===0)top--;
-  return {A,B,steps,res,n,top,value:a-b};
+  return {A,B,steps,res,n,top,a,b,value:a-b,aLen:String(a).length,bLen:String(b).length};
 }
-/* the two classic wrong answers, so feedback can name the mistake */
-function subMistakes(a,b){
-  const n=String(a).length, A=digitsOf(a,n), B=digitsOf(b,n);
-  const small=Number(A.map((x,i)=>Math.abs(x-B[i])).reverse().join(''));
-  const nodec=Number(A.map((x,i)=>x<B[i]?x+10-B[i]:x-B[i]).reverse().join(''));
-  return {small,nodec};
+/* the words an experienced teacher says at each moment */
+function talk(P,i,phase){
+  const s=P.steps[i];
+  if(phase==='compare'){
+    const start=i===0?'نبدأُ دائماً من <b>منزلةِ الآحادِ</b>. ':'';
+    return start+`في منزلةِ ${PLACE[i]}: هل نستطيعُ أن نطرحَ ${ar(s.b)} من ${ar(s.before)}؟ `+(s.need?`<b>لا</b>، لأنّ ${ar(s.before)} أصغرُ من ${ar(s.b)}. نحتاجُ <b>إعادةَ التسميةِ</b>.`:'نعم، لأنّ '+ar(s.before)+(s.before===s.b?' يساوي ':' أكبرُ من ')+ar(s.b)+'. لا نحتاجُ إعادةَ تسميةٍ.');
+  }
+  if(phase==='regroup'){
+    const lend=s.ev[0];
+    if(s.j===i+1)return `نأخذُ <b>١</b> من منزلةِ ${PLACE[s.j]} فيصبحُ ${ar(lend.v)}، و<b>الواحدُ</b> في ${PLACE[s.j]} يساوي <b>١٠ ${UNIT[i]}</b>. إذن يصبحُ عندنا ${ar(s.before)} + ١٠ = <b>${ar(s.eff)}</b> ${UNIT[i]}.`;
+    return `منزلةُ ${PLACE[i+1]} فيها <b>صفرٌ</b>، فلا نستطيعُ أن نأخذَ منها. نذهبُ يساراً حتى نجدَ رقماً ليس صفراً: منزلةُ ${PLACE[s.j]}. نأخذُ منها ١ فتصبحُ ${ar(lend.v)}، `+
+      `وكلُّ صفرٍ في الطريقِ يصبحُ ١٠ ثم يعطي ١ لمن بعدَه فيبقى <b>٩</b>. وأخيراً تصبحُ ${PLACE[i]}: ${ar(s.before)} + ١٠ = <b>${ar(s.eff)}</b>.`;
+  }
+  if(phase==='subtract'){
+    const lead=i>P.top?' وهذا صفرٌ في أقصى اليسارِ فلا نكتبُه.':'';
+    return `الآن نطرحُ: ${ar(s.eff)} − ${ar(s.b)} = <b>${ar(s.r)}</b> ${UNIT[i]}.${lead}`;
+  }
+  if(phase==='done')return `انتهينا! <b>${ar(P.a)} − ${ar(P.b)} = ${ar(P.value)}</b>. ولنتأكدَ نجمعُ: ${ar(P.value)} + ${ar(P.b)} = ${ar(P.a)} ✓`;
+  return '';
 }
 
-/* place-value table: columns are ones-first, so in a right-to-left page the ones sit on the right like the book */
-function pvHTML(o){
-  const {n,A,B,padB,quiz}=o, groups=[['الوحدات',3,''],['الألوف',3,'g1'],['ملايين',1,'g2']];
+/* ---------- Column widget: the book's place-value table or the vertical layout ---------- */
+function pvTable(P,quiz,padB){
+  const n=P.n, groups=[['الوحدات',3,''],['الألوف',3,'g1'],['ملايين',2,'g2']];
   let gh='<th class="op"></th>',left=n;
   for(const [name,span,cls] of groups){if(left<=0)break;const s=Math.min(span,left);gh+=`<th colspan="${s}" class="${cls}">${name}</th>`;left-=s;}
   const sub='<th class="op"></th>'+[...Array(n)].map((_,i)=>`<th class="${i>=6?'g2':i>=3?'g1':''}">${HEAD[i]}</th>`).join('');
-  const topLen=String(o.a).length, botLen=String(o.b).length;
-  const row=(cells,op,cls)=>`<tr class="${cls||''}"><td class="op">${op}</td>${cells}</tr>`;
-  const topCells=[...Array(n)].map((_,i)=>`<td style="--cc:${COLC[i]}" data-c="${i}"><div class="cell"><div class="mk"></div><div class="d t">${i<topLen?ar(A[i]):''}</div></div></td>`).join('');
-  const botCells=[...Array(n)].map((_,i)=>`<td style="--cc:${COLC[i]}" data-c="${i}"><div class="cell"><div class="d">${i<botLen||padB?ar(B[i]):''}</div></div></td>`).join('');
-  const resCells=[...Array(n)].map((_,i)=>`<td style="--cc:${COLC[i]}" data-c="${i}">${quiz?`<button class="bx" data-i="${i}" aria-label="ناتج ${HEAD[i]}"></button>`:'<div class="cell"><div class="d r"></div></div>'}</td>`).join('');
-  return `<table class="pv" dir="rtl"><thead><tr>${gh}</tr><tr>${sub}</tr></thead><tbody>${row(topCells,'')}${row(botCells,'−')}${row(resCells,'','res')}</tbody></table>`;
+  const td=(i,inner)=>`<td style="--cc:${COLC[i]}" data-c="${i}">${inner}</td>`;
+  const top=[...Array(n)].map((_,i)=>td(i,`<div class="cell"><div class="mk"></div><div class="d t">${i<P.aLen?ar(P.A[i]):''}</div></div>`)).join('');
+  const bot=[...Array(n)].map((_,i)=>td(i,`<div class="cell"><div class="d">${i<P.bLen||padB?ar(P.B[i]):''}</div></div>`)).join('');
+  const res=[...Array(n)].map((_,i)=>td(i,quiz?`<button class="bx" data-c="${i}" aria-label="ناتج ${PLACE[i]}"></button>`:'<div class="cell"><div class="d r"></div></div>')).join('');
+  return `<table class="pv" dir="rtl"><thead><tr>${gh}</tr><tr>${sub}</tr></thead><tbody><tr class="tp"><td class="op"></td>${top}</tr><tr><td class="op">−</td>${bot}</tr><tr class="res"><td class="op"></td>${res}</tr></tbody></table>`;
 }
-function pvMark(table,ev){
-  const td=table.querySelector(`tbody tr:first-child td[data-c="${ev.c}"]`);if(!td)return;
-  const mk=td.querySelector('.mk'), last=mk.lastElementChild||td.querySelector('.d.t');
-  if(last)last.classList.add('x');
-  const s=document.createElement('span');s.textContent=ar(ev.v);mk.append(s);
+function vGrid(P,quiz,padB){
+  const n=P.n;let h='';
+  for(let i=n-1;i>=0;i--){
+    h+=`<div class="vc" style="--cc:${COLC[i]}" data-c="${i}"><div class="mk"></div><div class="d t">${i<P.aLen?ar(P.A[i]):''}</div><div class="d">${i<P.bLen||padB?ar(P.B[i]):''}</div>`+
+       `<div class="rl" style="width:100%"></div><div class="r">${quiz?`<button class="bx" data-c="${i}" aria-label="ناتج ${PLACE[i]}"></button>`:'<div class="d"></div>'}</div></div>`;
+  }
+  h+='<div class="vc"><div class="mk"></div><div class="d"></div><div class="op">−</div><div class="rl" style="width:100%"></div><div class="r"><div class="d"></div></div></div>';
+  return `<div class="vgrid" style="grid-template-columns:repeat(${n+1},auto)">${h}</div>`;
 }
-const hlCol=(table,c)=>table.querySelectorAll('td[data-c]').forEach(td=>td.classList.toggle('hl',+td.dataset.c===c));
+function chipsHTML(P){
+  return `<div class="chips" aria-label="لوحة الأقراص">${[...Array(P.n)].map((_,i)=>`<div class="cc" style="--cc:${COLC[i]}" data-c="${i}"><div class="stack">${'<i class="chip"></i>'.repeat(i<P.aLen?P.A[i]:0)}</div><span class="cap">${UNIT[i]}</span></div>`).join('')}</div>`;
+}
+function CW(host,o){
+  const P=subPlan(o.a,o.b,o.n), quiz=o.mode==='quiz';
+  host.innerHTML=`<div class="cw">${o.skin==='table'?pvTable(P,quiz,o.padB):vGrid(P,quiz,o.padB)}${o.chips?chipsHTML(P):''}${quiz?'<div class="cw-tools"><button class="btn regroup" data-act="regroup">أعِدِ التسميةَ ↶</button></div>':''}</div>`;
+  const root=host.querySelector('.cw');
+  const colEls=c=>root.querySelectorAll(`[data-c="${c}"]`);
+  const topCell=c=>o.skin==='table'?root.querySelector(`tr.tp td[data-c="${c}"]`):root.querySelector(`.vc[data-c="${c}"]`);
+  const st={i:0,phase:0,reg:[],done:false,tries:0};
+  function hl(c){root.querySelectorAll('[data-c]').forEach(e=>{if(e.classList.contains('bx')||e.classList.contains('cc'))return;e.classList.toggle('hl',+e.dataset.c===c);e.classList.toggle('cur',quiz&&+e.dataset.c===c&&(e.tagName==='TD'?e.closest('tr').classList.contains('res'):true));});
+    if(quiz)root.querySelectorAll('.bx').forEach(b=>b.classList.toggle('on',+b.dataset.c===c));}
+  function mark(ev){const tc=topCell(ev.c);if(!tc)return;const mk=tc.querySelector('.mk'), last=mk.lastElementChild||tc.querySelector('.d.t');if(last)last.classList.add('x');
+    const s=document.createElement('span');s.textContent=ar(ev.v);mk.append(s);}
+  async function chipsRegroup(s,i){
+    const box=c=>root.querySelector(`.chips .cc[data-c="${c}"] .stack`);if(!box(i))return;
+    const takeOne=c=>{const ch=box(c).querySelector('.chip:not(.lend):not(.out)');if(ch){ch.classList.add('lend');setTimeout(()=>ch.remove(),480);}};
+    const addTen=c=>{for(let k=0;k<10;k++){const e=document.createElement('i');e.className='chip';e.style.animationDelay=(k*25)+'ms';box(c).append(e);}
+      const r=box(c).getBoundingClientRect(),b=document.createElement('div');b.className='burst';b.style.setProperty('--cc',COLC[c]);b.textContent='+١٠';b.style.left=r.left+r.width/2-14+'px';b.style.top=r.top-24+'px';document.body.append(b);setTimeout(()=>b.remove(),900);};
+    takeOne(s.j);await wait(380);
+    for(let k=s.j-1;k>i;k--){addTen(k);await wait(420);takeOne(k);await wait(380);}
+    addTen(i);await wait(420);
+  }
+  async function chipsSub(i,b){const box=root.querySelector(`.chips .cc[data-c="${i}"] .stack`);if(!box)return;const live=[...box.querySelectorAll('.chip:not(.lend):not(.out)')];
+    for(let k=0;k<b;k++){const ch=live[live.length-1-k];if(ch){ch.classList.add('out');setTimeout(()=>ch.remove(),450);}}await wait(b?420:100);}
+  async function doRegroup(i){const s=P.steps[i];sfx.regroup();for(const ev of s.ev){mark(ev);await wait(240);}if(o.chips)await chipsRegroup(s,i);st.reg[i]=true;}
+  function writeDemo(i){if(i>P.top)return;const r=o.skin==='table'?root.querySelector(`tr.res td[data-c="${i}"] .d`):root.querySelector(`.vc[data-c="${i}"] .r .d`);if(r)r.textContent=ar(P.res[i]);}
+  /* demo: one press = one teaching moment */
+  const phases=[];P.steps.forEach((s,i)=>{phases.push([i,'compare']);if(s.need)phases.push([i,'regroup']);phases.push([i,'subtract']);});phases.push([P.n-1,'done']);
+  async function next(){
+    if(st.phase>=phases.length)return null;const [i,ph]=phases[st.phase++];
+    if(ph!=='done')hl(i);else hl(-1);
+    if(ph==='regroup')await doRegroup(i);
+    if(ph==='subtract'){if(o.chips)await chipsSub(i,P.B[i]);writeDemo(i);sfx.pop();o.onNote&&o.onNote(i);}
+    if(ph==='done')sfx.ok();else if(ph==='compare')sfx.tap();
+    return {i,ph,text:talk(P,i,ph),last:st.phase>=phases.length};
+  }
+  /* quiz: the student regroups and writes each digit */
+  function prompt(){const i=st.i,s=P.steps[i];return `${i===0?'نبدأُ من الآحادِ. ':''}منزلةُ ${PLACE[i]}: ${ar(s.before)} − ${ar(s.b)}. هل نحتاجُ إعادةَ تسميةٍ؟ إن احتجتَ اضغطْ «أعِدِ التسميةَ»، وإلا فاكتبِ الناتجَ.`;}
+  function advance(){
+    st.i++;
+    while(st.i<P.n&&st.i>P.top){const s=P.steps[st.i];if(s.need&&!st.reg[st.i]){P.steps[st.i].ev.forEach(mark);st.reg[st.i]=true;}st.i++;}
+    if(st.i>=P.n){st.done=true;hl(-1);root.querySelector('.cw-tools')?.remove();return {tone:'good',text:talk(P,0,'done'),done:true};}
+    hl(st.i);return {tone:null,text:prompt()};
+  }
+  function key(d){
+    if(st.done)return null;const i=st.i,s=P.steps[i];
+    if(s.need&&!st.reg[i]){st.tries++;root.querySelector('[data-act="regroup"]')?.classList.add('pulse');
+      return {tone:'warn',text:`انتبه! ${ar(s.before)} أصغرُ من ${ar(s.b)}، فلا نستطيعُ الطرحَ الآن. اضغطْ «أعِدِ التسميةَ» لنأخذَ ١ من ${s.j===i+1?'منزلةِ '+PLACE[i+1]:'أوّلِ منزلةٍ على اليسارِ ليستْ صفراً'}.`};}
+    const bx=root.querySelector(`.bx[data-c="${i}"]`);
+    if(Number(d)===s.r){bx.textContent=ar(d);bx.classList.remove('no');bx.classList.add('ok');sfx.pop();
+      const msg=`أحسنتَ: ${ar(s.eff)} − ${ar(s.b)} = ${ar(s.r)} ${UNIT[i]}.`;const nx=advance();
+      return {tone:nx.done?'good':'good',text:nx.done?nx.text:msg+' '+nx.text,done:nx.done};}
+    st.tries++;bx.textContent=ar(d);bx.classList.remove('no');void bx.offsetWidth;bx.classList.add('no');sfx.bad();
+    return {tone:'warn',text:`ليس صحيحاً. احسبْها مرةً أخرى: ${ar(s.eff)} − ${ar(s.b)} = ؟`};
+  }
+  async function regroupClick(){
+    if(st.done)return null;const i=st.i,s=P.steps[i];
+    if(!s.need){st.tries++;sfx.bad();return {tone:'warn',text:`لا نحتاجُ إعادةَ التسميةِ هنا، لأنّ ${ar(s.before)} ${s.before===s.b?'يساوي':'أكبرُ من'} ${ar(s.b)}. اطرحْ مباشرةً واكتبِ الناتجَ.`};}
+    if(st.reg[i])return {tone:null,text:`أعدتَ التسميةَ. الآن: ${ar(s.eff)} − ${ar(s.b)} = ؟`};
+    root.querySelector('[data-act="regroup"]')?.classList.remove('pulse');
+    await doRegroup(i);
+    return {tone:'good',text:talk(P,i,'regroup')+` الآن اكتبْ: ${ar(s.eff)} − ${ar(s.b)} = ؟`};
+  }
+  async function showMarks(){for(let i=st.i;i<P.n;i++){if(P.steps[i].need&&!st.reg[i]){for(const ev of P.steps[i].ev){mark(ev);await wait(110);}st.reg[i]=true;}}}
+  async function solveAll(){await showMarks();for(let i=st.i;i<=P.top;i++){const bx=root.querySelector(`.bx[data-c="${i}"]`);if(bx){bx.textContent=ar(P.res[i]);bx.classList.add('ok');}}
+    st.done=true;hl(-1);root.querySelector('.cw-tools')?.remove();}
+  if(quiz)hl(0);
+  return {P,root,st,next,key,regroupClick,prompt,showMarks,solveAll,hl};
+}
 
-/* vertical layout: rows of tokens (digits, or {box:k}), operator on the right like the book */
-function vertHTML(rows,op,n,cls){
-  n=n||Math.max(...rows.filter(Array.isArray).map(r=>r.length));
-  const cell=t=>typeof t==='object'?`<span>${t.html}</span>`:`<span>${t===''?'':ar(t)}</span>`;
-  let h='';
-  rows.forEach((r,ri)=>{
-    if(r==='rule'){h+='<div class="rl"></div>';return;}
-    if(r.span){h+=`<span style="grid-column:1 / span ${n}">${r.span}</span><span class="vo">${ri===1?op:''}</span>`;return;}
-    const pad=[...Array(n-r.length)].map(()=>'<span></span>').join('');
-    h+=pad+r.map(cell).join('')+`<span class="vo">${ri===1?op:''}</span>`;
-  });
-  return `<div class="vert ${cls||''}" style="grid-template-columns:repeat(${n},auto) auto">${h}</div>`;
-}
-const dg=x=>String(x).split('');
-
-/* ---------- Handwriting lines (hint solutions) ---------- */
+/* ---------- Handwriting lines ---------- */
 async function writeLines(box,lines,gap=650){
   box.innerHTML='';const els=[];
   lines.forEach(([l,n])=>{
@@ -737,297 +867,546 @@ function go(name){
   $$('.tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.go===name)));
   window.scrollTo({top:0,behavior:reduced?'auto':'smooth'});
   if(name==='cover')fillTank();
-  if(name==='learn')openPaper();
+  if(name==='learn'&&!$('#paper').innerHTML)showLesson(0);
   if(name==='play')startPlay(false);
   if(name==='result')showResult();
   sfx.whoosh();
 }
 document.addEventListener('click',e=>{
-  const s=e.target.closest('[data-sec]');if(s){go('play');jumpSec(s.dataset.sec);return;}
+  const s=e.target.closest('[data-sec]');if(s){go('play');jumpUnit(s.dataset.sec);return;}
+  const l=e.target.closest('[data-lesson]');if(l){go('learn');showLesson(+l.dataset.lesson);return;}
   const b=e.target.closest('[data-go]');if(b)go(b.dataset.go);
 });
+function fillTank(){const r=$('#oilFill'), h=86*(275120/358640);r.setAttribute('y',206);r.setAttribute('height',0);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{r.setAttribute('y',206-h);r.setAttribute('height',h);}));}
 
-/* ---------- Cover (p.46): the tanker fills to 275120 of 358640 ---------- */
-function fillTank(){
-  const r=$('#oilFill'), h=86*(275120/358640);
-  r.setAttribute('y',206);r.setAttribute('height',0);
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{r.setAttribute('y',206-h);r.setAttribute('height',h);}));
+/* static vertical arithmetic (used for checks and estimates) */
+function vertHTML(rows,op){
+  const n=Math.max(...rows.filter(Array.isArray).map(r=>r.length));let h='';
+  const opRow=rows.indexOf('rule')-1;
+  rows.forEach((r,ri)=>{if(r==='rule'){h+='<div class="rl"></div>';return;}
+    h+=[...Array(n-r.length)].map(()=>'<span></span>').join('')+r.map(t=>`<span>${ar(t)}</span>`).join('')+`<span class="vo">${ri===opRow?op:''}</span>`;});
+  return `<div class="vert" style="grid-template-columns:repeat(${n},auto) auto">${h}</div>`;
+}
+const dg=x=>String(x).split('');
+
+/* ---------- Example player: a teacher talks you through one subtraction ---------- */
+function exPlayer(box,cfg){
+  box.innerHTML=`${coachHTML('','اضغطْ «الخطوةُ التاليةُ» وسأشرحُ لك كلَّ منزلةٍ.')}
+    <div class="pv-wrap" style="grid-template-columns:${cfg.notes?'minmax(0,1.25fr) minmax(0,1fr)':'minmax(0,1fr)'}"><div class="pv-board"></div>${cfg.notes?'<ol class="pv-notes"></ol>':''}</div>
+    <div class="step-ctl"><button class="btn" data-x="next">الخطوةُ التاليةُ<svg><use href="#i-arrow"/></svg></button>
+    <button class="btn ghost" data-x="all"><svg><use href="#i-play"/></svg>شغّلِ الشرحَ كاملاً</button><button class="btn ghost" data-x="reset">أعِدْ</button></div>`;
+  const co=box.querySelector('.coach');let w,playing=false;
+  const notes=box.querySelector('.pv-notes');
+  function build(){w=CW(box.querySelector('.pv-board'),{a:cfg.a,b:cfg.b,n:cfg.n,skin:cfg.skin,mode:'demo',padB:cfg.padB,chips:cfg.chips,
+    onNote:i=>{if(notes&&cfg.notes[i]){const li=document.createElement('li');li.style.setProperty('--cc',COLC[i]);li.textContent=cfg.notes[i];notes.append(li);}}});
+    if(notes)notes.innerHTML=cfg.intro?`<li class="intro">${cfg.intro}</li>`:'';
+    say(co,cfg.start||'اضغطْ «الخطوةُ التاليةُ» وسأشرحُ لك كلَّ منزلةٍ.');box.querySelector('[data-x="next"]').disabled=false;}
+  async function step(){const r=await w.next();if(!r)return false;if(r.ph==="done"&&cfg.onDone)cfg.onDone();say(co,r.text,r.ph==="regroup"?"warn":r.ph==="done"?"good":null);
+    if(r.last)box.querySelector('[data-x="next"]').disabled=true;return !r.last;}
+  box.addEventListener('click',async e=>{const x=e.target.closest('[data-x]');if(!x)return;
+    if(x.dataset.x==='next'&&!playing)await step();
+    if(x.dataset.x==='reset'){playing=false;build();}
+    if(x.dataset.x==='all'&&!playing){playing=true;build();await wait(300);while(playing&&await step())await wait(1700);playing=false;}});
+  build();return {rebuild:build};
 }
 
-/* ---------- Explainer (pp.48–49): two examples on an animated place-value table ---------- */
-const EX=[
- {a:538714,b:278629,n:6,title:'أجدُ عددَ أكياسِ الحبوبِ المتبقيةِ التي يتسعُ اليها المخزنُ باستعمالِ عمليةِ الطرحِ:',intro:'ألاحظُ تطابقَ الألوانِ داخلَ جدولِ القيمةِ المكانيةِ',
+/* ---------- Lesson panels ---------- */
+const LESSONS=[
+  {t:'الدرس ١',s:'طرحُ الأعدادِ ضمنَ الملايينِ',build:L1},
+  {t:'الدرس ٢',s:'تقديرُ نواتجِ الطرحِ',build:L2},
+  {t:'الدرس ٣',s:'الجملُ العدديةُ المفتوحةُ',build:L3},
+  {t:'الدرس ٤',s:'خطةُ حلِّ المسألةِ (الحلُّ العكسيُّ)',build:L4}];
+$('#ltabs').innerHTML=LESSONS.map((l,k)=>`<button role="tab" data-lt="${k}" aria-selected="${k===0}">${l.t}<small>${l.s}</small></button>`).join('');
+$('#ltabs').addEventListener('click',e=>{const b=e.target.closest('[data-lt]');if(b){sfx.tap();showLesson(+b.dataset.lt);}});
+let lessonIdx=0;
+function showLesson(k){
+  lessonIdx=k;$$('#ltabs button').forEach((b,j)=>b.setAttribute('aria-selected',String(j===k)));
+  const p=$('#paper');p.innerHTML='';LESSONS[k].build(p);p.classList.remove('open');void p.offsetWidth;p.classList.add('open');
+}
+const head=(n,title,pages,idea,vocab)=>`<div class="fold paper-head"><span class="lesson-badge">الدرسُ ${n}</span><h1>${title}</h1><span class="pref">الكتاب · ص ${pages}</span>
+  <div class="idea" style="flex-basis:100%"><span><b>فكرةُ الدرسِ:</b> ${idea}</span>${vocab?`<span><b>المفرداتُ:</b> ${vocab}</span>`:''}</div></div>`;
+const learnBox=(txt,art)=>`<div class="fold"><div class="learn-top"><div class="story"><span class="tag">أتعلّمُ</span><p>${txt}</p></div>${art||''}</div></div>`;
+const ruleBox=html=>`<div class="fold"><div class="rule"><svg><use href="#i-bulb"/></svg><span>${html}</span></div></div>`;
+const toEx=u=>`<div class="step-ctl" style="margin-top:18px;justify-content:flex-end"><button class="btn" data-sec="${u}">إلى تمارينِ الدرسِ<svg><use href="#i-arrow"/></svg></button></div>`;
+const SILOS='<svg class="silos" viewBox="0 0 220 130" role="img" aria-label="صوامع حبوب"><g class="silo"><rect x="12" y="38" width="52" height="84" rx="4"/><path d="M12 40 L38 18 L64 40Z"/></g><g class="silo"><rect x="72" y="28" width="62" height="94" rx="4"/><path d="M72 30 L103 6 L134 30Z"/></g><g class="silo"><rect x="142" y="42" width="48" height="80" rx="4"/><path d="M142 44 L166 24 L190 44Z"/></g><g class="silo-lines"><path d="M12 60H64M12 82H64M12 104H64M72 54H134M72 78H134M72 102H134M142 64H190M142 86H190M142 108H190"/></g><path d="M0 124H220" class="ground"/></svg>';
+
+/* Lesson 1 */
+const EX1=[
+ {a:538714,b:278629,n:6,chips:true,title:'أجدُ عددَ أكياسِ الحبوبِ المتبقيةِ التي يتسعُ اليها المخزنُ باستعمالِ عمليةِ الطرحِ:',intro:'ألاحظُ تطابقَ الألوانِ داخلَ جدولِ القيمةِ المكانيةِ',
+  start:'لدينا ٥٣٨٧١٤ كيساً، خُزّنَ منها ٢٧٨٦٢٩. نطرحُ في جدولِ القيمةِ المكانيةِ منزلةً منزلةً. تحتَ الجدولِ <b>لوحةُ الأقراصِ</b>: كلُّ قرصٍ واحدٌ من منزلتِه.',
   notes:['أطرحُ الآحادَ: ٤ < ٩ لذلك أعدُ التسميةَ وأطرحُ ١٤ − ٩ = ٥ آحاد','أطرحُ العشراتِ: ٠ < ٢ لذلك أعدُ التسميةَ وأطرحُ ١٠ − ٢ = ٨ عشرات','أطرحُ المئاتِ: ٦ − ٦ = ٠ مئات',
    'أطرحُ آحادَ الألوفِ: ٨ − ٨ = ٠ آحاد الألوف','أطرحُ عشراتِ الألوفِ: ٣ < ٧ لذلك أعدُ التسميةَ وأطرحُ ١٣ − ٧ = ٦ عشرات الألوف','أطرحُ مئاتِ الألوفِ: ٤ − ٢ = ٢ مئات الألوف']},
- {a:4000000,b:625687,n:7,padB:true,title:'أستعملُ جدولَ القيمةِ المكانيةِ لأجدَ ناتجَ الطرحِ',intro:'أستعملُ خطواتِ المثالِ ١ نفسَها وأطرحُ',
+ {a:4000000,b:625687,n:7,padB:true,chips:true,title:'أستعملُ جدولَ القيمةِ المكانيةِ لأجدَ ناتجَ الطرحِ',intro:'أستعملُ خطواتِ المثالِ ١ نفسَها وأطرحُ',
+  start:'هذا المثالُ هو الأصعبُ: ٤٠٠٠٠٠٠ فيها ستةُ أصفارٍ! انتبهْ كيفَ نعيدُ التسميةَ <b>عبرَ الأصفارِ</b>.',
   notes:['أطرحُ الآحادَ: ١٠ − ٧ = ٣ آحاد','أطرحُ العشراتِ: ٩ − ٨ = ١ عشرات','أطرحُ المئاتِ: ٩ − ٦ = ٣ مئات','أطرحُ آحادَ الألوفِ: ٩ − ٥ = ٤ آلاف',
-   'أطرحُ عشراتِ الألوفِ: ٩ − ٢ = ٧ عشرات الألوف','أطرحُ مئاتِ الألوفِ: ٩ − ٦ = ٣ مئات الألوف','أطرحُ آحادَ الملايينِ: ٣ − ٠ = ٣ ملايين']}
-];
-let exi=0, pk=0, plan=null, playing=false;
-function buildEx(k){
-  exi=k;pk=0;playing=false;const e=EX[k];plan=subPlan(e.a,e.b,e.n);
-  $$('#extabs button').forEach((b,j)=>b.setAttribute('aria-selected',String(j===k)));
-  $('#exTitle').textContent=e.title;document.querySelector('.exline .exno').textContent=ar(k+1);
-  $('#pvBoard').innerHTML=pvHTML({...e,A:plan.A,B:plan.B});
-  $('#pvNotes').innerHTML=`<li class="intro">${e.intro}</li>`;
-  $('#pvNext').disabled=false;
-  $('#method2').hidden=k!==0;$('#m1title').hidden=k!==0;
-  $('#vMain').innerHTML=vertHTML([dg(e.a),dg(e.b),'rule',dg(e.a-e.b)],'−');
-  $('#vCheck').innerHTML=vertHTML([dg(e.b),dg(e.a-e.b),'rule',dg(e.a)],'+');
+   'أطرحُ عشراتِ الألوفِ: ٩ − ٢ = ٧ عشرات الألوف','أطرحُ مئاتِ الألوفِ: ٩ − ٦ = ٣ مئات الألوف','أطرحُ آحادَ الملايينِ: ٣ − ٠ = ٣ ملايين']}];
+const LABS=[
+ {h:'١ عشرة = ١٠ آحاد',p:'عندي <b>١ عشرة و٤ آحاد</b>. أريدُ أن آخذَ ٩ آحاد، لكن ٤ لا تكفي! أفكُّ العشرةَ إلى ١٠ آحاد.',cols:[[1,1],[0,4]],btn:'فُكَّ العشرةَ',after:'صار عندي ٠ عشرات و<b>١٤ آحاد</b>. العددُ نفسُه ١٤، تغيّرَ شكلُه فقط.'},
+ {h:'كلُّ منزلةٍ = ١٠ من التي على يمينِها',p:'١ ألف = ١٠ مئات، و١ مئة = ١٠ عشرات… والفكرةُ نفسُها حتى الملايين.',cols:[[3,1],[2,2]],btn:'فُكَّ الألفَ',after:'صار عندي ٠ آلاف و<b>١٢ مئة</b>، وهي ١٢٠٠ نفسُها.'},
+ {h:'إعادةُ التسميةِ عبرَ الأصفارِ',p:'في <b>١٠٠٠</b> لا عشراتٍ ولا مئاتٍ آخذُ منها. آخذُ من الألفِ، وكلُّ صفرٍ في الطريقِ يصبحُ ٩.',cols:[[3,1],[2,0],[1,0],[0,0]],btn:'خُذْ ١٠ آحاد',after:'١٠٠٠ = ٩ مئات + ٩ عشرات + <b>١٠ آحاد</b>'}];
+function labHTML(L,k){return `<div class="labc" data-lab="${k}"><h4>${L.h}</h4><p>${L.p}</p><div class="labboard">${L.cols.map(([c,n])=>`<div class="labcol" style="--cc:${COLC[c]}" data-c="${c}"><span class="cnt">${ar(n)}</span><div class="stack" style="display:grid;grid-template-columns:repeat(2,16px);gap:3px;align-content:end;min-height:20px">${'<i class="chip"></i>'.repeat(n)}</div><span class="cap">${UNIT[c]}</span></div>`).join('')}</div><button class="btn regroup" data-labgo="${k}">${L.btn}</button><p class="after" hidden>${L.after}</p></div>`;}
+async function runLab(k){
+  const card=$(`[data-lab="${k}"]`), L=LABS[k], cols=L.cols.map(x=>x[0]), btn=card.querySelector('[data-labgo]');btn.disabled=true;sfx.regroup();
+  const col=c=>card.querySelector(`.labcol[data-c="${c}"]`);
+  const setCnt=(c,d)=>{const e=col(c).querySelector('.cnt');e.textContent=ar(Number(e.textContent.replace(/[٠-٩]/g,x=>'٠١٢٣٤٥٦٧٨٩'.indexOf(x)))+d);};
+  const take=c=>{const ch=col(c).querySelector('.chip:not(.lend)');if(ch){ch.classList.add('lend');setTimeout(()=>ch.remove(),480);}setCnt(c,-1);};
+  const add10=c=>{const st=col(c).querySelector('.stack');for(let i=0;i<10;i++){const e=document.createElement('i');e.className='chip';e.style.animationDelay=(i*30)+'ms';st.append(e);}setCnt(c,10);};
+  take(cols[0]);await wait(500);
+  for(let i=1;i<cols.length;i++){add10(cols[i]);await wait(600);if(i<cols.length-1){take(cols[i]);await wait(500);}}
+  card.querySelector('.after').hidden=false;sfx.ok();
 }
-async function pvStep(){
-  if(pk>=plan.n)return;
-  const i=pk++, t=$('#pvBoard table'), st=plan.steps[i], e=EX[exi];
-  hlCol(t,i);sfx.tap();
-  for(const ev of st.ev){pvMark(t,ev);sfx.pop();await wait(260);}
-  await wait(st.ev.length?200:120);
-  if(i<=plan.top){const d=t.querySelector(`tr.res td[data-c="${i}"] .d`);d.textContent=ar(plan.res[i]);}
-  const li=document.createElement('li');li.style.setProperty('--cc',COLC[i]);li.textContent=e.notes[i];$('#pvNotes').append(li);
-  if(pk>=plan.n){$('#pvNext').disabled=true;hlCol(t,-1);sfx.ok();}
+function L1(p){
+  p.innerHTML=head('١','طرحُ الأعدادِ ضمنَ الملايينِ','٤٨–٥٠','أطرحُ الأعدادَ ضمنَ الملايينِ.','<mark>الطرحُ</mark>')+
+    learnBox('مخزنٌ للحبوبِ يتسعُ لـ ٥٣٨٧١٤ كيساً من الحبوبِ، خُزنَ ٢٧٨٦٢٩ كيساً من الحبوبِ. ما عددُ أكياسِ الحبوبِ المتبقيةِ لملءِ المخزنِ؟',SILOS)+
+    ruleBox('تعلمتُ سابقاً طرحَ الأعدادِ ضمنَ ٩٩٩٩، ويمكنني إجراءَ <mark>الطرحِ</mark> ضمنَ الملايينِ بالطريقةِ نفسِها.')+
+    `<div class="fold"><span class="tag blue">قبلَ أن نبدأَ: ما معنى إعادةُ التسميةِ؟</span>
+      ${coachHTML('','إعادةُ التسميةِ هي أهمُّ فكرةٍ في هذا الفصلِ. عندما يكونُ الرقمُ العلويُّ <b>أصغرَ</b> من الرقمِ الذي نطرحُه، نأخذُ <b>واحداً</b> من المنزلةِ التي على اليسارِ، وهذا الواحدُ يساوي <b>عشرةً</b> في منزلتِنا. جرّبْ بنفسِك:')}
+      <div class="lab">${LABS.map(labHTML).join('')}</div></div>
+    <div class="fold"><span class="tag green">الأمثلةُ</span>
+      <div class="exline" style="margin-top:12px"><span class="exno" id="exNo">١</span><span id="exTitle"></span></div>
+      <div class="extabs" id="extabs"><button data-ex="0" aria-selected="true">مثال ١</button><button data-ex="1" aria-selected="false">مثال ٢</button></div>
+      <h3 class="method" id="m1title"><b>الطريقةُ الأولى:</b> استعمالُ جدولِ القيمةِ المكانيةِ</h3>
+      <div id="exBox"></div>
+      <div id="m2"><h3 class="method"><b>الطريقةُ الثانيةُ:</b> استعمالُ الطرحِ العموديِّ</h3>
+        <div class="m2"><div id="m2box" style="flex:1;min-width:280px"></div><div class="vcheck"><span class="vlabel">أتحقّقُ:</span><div class="vbox">${vertHTML([dg(278629),dg(260085),'rule',dg(538714)],'+')}</div></div></div></div>
+      ${toEx('L1')}</div>`;
+  p.querySelectorAll('[data-labgo]').forEach(b=>b.addEventListener('click',()=>runLab(+b.dataset.labgo)));
+  const show=k=>{const e=EX1[k];$('#exNo').textContent=ar(k+1);$('#exTitle').textContent=e.title;$$('#extabs button').forEach((b,j)=>b.setAttribute('aria-selected',String(j===k)));
+    $('#m2').hidden=k!==0;$('#m1title').hidden=k!==0;exPlayer($('#exBox'),{...e,skin:'table'});
+    if(k===0)exPlayer($('#m2box'),{a:538714,b:278629,n:6,skin:'vert',start:'الطريقةُ الثانيةُ هي نفسُ الخطواتِ، لكن نكتبُ العددينِ أحدَهما تحتَ الآخرِ، ونكتبُ إعادةَ التسميةِ فوقَ الأرقامِ.'});};
+  $('#extabs').addEventListener('click',e=>{const b=e.target.closest('[data-ex]');if(b){sfx.tap();show(+b.dataset.ex);}});
+  show(0);
 }
-$('#pvNext').addEventListener('click',()=>{if(!playing)pvStep();});
-$('#pvAll').addEventListener('click',async()=>{if(playing)return;playing=true;buildEx(exi);playing=true;await wait(300);
-  while(pk<plan.n&&playing){await pvStep();await wait(700);}playing=false;});
-$('#pvReset').addEventListener('click',()=>buildEx(exi));
-$('#extabs').addEventListener('click',e=>{const b=e.target.closest('[data-ex]');if(b){sfx.tap();buildEx(+b.dataset.ex);}});
-$('#writeBtn').addEventListener('click',async()=>{
-  for(const id of ['#vMain','#vCheck']){const v=$(id+' .vert');v.classList.add('wr');[...v.children].forEach(c=>c.classList.remove('in'));}
-  for(const id of ['#vMain','#vCheck']){for(const c of $(id+' .vert').children){c.classList.add('in');if(c.textContent)sfx.write();await wait(70);}await wait(300);}
-});
-function openPaper(){const p=$('#paper');p.classList.remove('open');void p.offsetWidth;p.classList.add('open');buildEx(exi);}
 
-/* ---------- Exercises exactly as printed (pp.46–50) ---------- */
-const GROUPS=[{k:'c',name:'مسألةُ الفصلِ'},{k:'pre',name:'الاختبارُ القبليُّ'},{k:'t',name:'أتأكدُ'},{k:'s',name:'أتحدثُ'},{k:'h',name:'أحلُّ'},{k:'f',name:'أفكرُ'},{k:'w',name:'أكتبُ'}];
-const I_PV='أستعملُ جدولَ القيمةِ المكانيةِ لأجدَ ناتجَ الطرحِ:', I_PV2='أستعملُ جدولَ القيمةِ المكانيةِ وأجدُ ناتجَ الطرحِ:',
-  I_FIND='أجدُ ناتجَ الطرحِ:', I_CHK='أجدُ ناتجَ الطرحِ، ثُمَّ أتحقّقُ من صحةِ الحلِّ باستعمالِ الجمعِ أو الطرحِ:',
-  I_EST='أقدّرُ ناتجَ الجمعِ بالتقريبِ لأقربِ مئةٍ:', I_BOX='أكتبُ العددَ المناسبَ في ☐:', I_VERT='أستعملُ الطرحَ العموديَّ وأجدُ ناتجَ الطرحِ:',
-  I_VCHK='أستعملُ الطرحَ العموديَّ وأجدُ ناتجَ الطرحِ وأتحقّقُ:', I_PALM='أستعملُ الجدولَ المجاورَ لحلِّ السؤالينِ:';
-const pv=(g,no,p,ins,a,b,n)=>({g,no,p,ins,kind:'pv',a,b,n});
-const vt=(g,no,p,ins,a,b,kind='vert')=>({g,no,p,ins,kind,a,b});
-const eq=(g,no,p,ins,text,tpl,ans,o={})=>({g,no,p,ins,kind:'eq',text,tpl,ans,...o});
+/* Lesson 2: rounding then subtracting */
+const roundTo=(x,p)=>Math.round(x/p)*p;
+function roundHTML(x,p){const s=String(x), L=s.length, rp=L-String(p).length, dc=rp+1;
+  return `<span class="round">${s.split('').map((d,k)=>`<span class="${k===rp?'rp':k===dc?'dc':''}">${ar(d)}</span>`).join('')}</span>`;}
+const PNAME={1000:['الآلاف','المئات'],10000:['عشرات الألوف','الآلاف'],100000:['مئات الألوف','عشرات الألوف']};
+function why(x,p){const s=String(x), dc=Number(s[s.length-String(p).length+1]);const [rpN,dcN]=PNAME[p];
+  return dc>=5?`بما أنّ مرتبةَ ${dcN} ${ar(dc)} ${dc===5?'=':'>'} ٥، يُضافُ ١ إلى رقمِ مرتبةِ ${rpN}`:`بما أنّ مرتبةَ ${dcN} ${ar(dc)} < ٥، يبقى رقمُ مرتبةِ ${rpN} دونَ زيادةٍ`;}
+const EX2=[
+ {q:'أقدّرُ مساحةَ المنطقةِ غيرِ المحصودةِ باستعمالِ التقريبِ:',a:378240,b:143930,p:10000,s1:'الخطوةُ (١): قرّبْ كلَّ عددٍ لأقربِ عشرةِ آلافٍ',note:'<b class="red">انتبهْ:</b> تقرّبُ إلى أقربِ ١٠ آلافٍ بالطريقةِ نفسِها لأقربِ ألفٍ',
+  w:'أكتبُ: ٣٧٨٢٤٠ − ١٤٣٩٣٠ ≈ ٢٤٠٠٠٠ مترٍ مربعٍ مساحةُ المنطقةِ غيرِ المحصودةِ.'},
+ {q:'أرادتْ صفيةُ شراءَ ثلاجةٍ ثمنُها ١٤٨٩١٥٠ ديناراً إذا كانَ لديها مبلغٌ قدرُه ٤٣٥٣٦٥٠ ديناراً. أقدّرُ المبلغَ الذي يبقى مع صفيةَ بعدَ الشراءِ باستعمالِ التقريبِ لأقربِ مئةِ ألفٍ.',a:4353650,b:1489150,p:100000,s1:'الخطوةُ (١): أقرّبُ كلاً من العددينِ.',
+  w:'أكتبُ: ٤٣٥٣٦٥٠ − ١٤٨٩١٥٠ ≈ ٢٩٠٠٠٠٠ دينارٍ المبلغُ الذي بقيَ مع صفيةَ بعدَ الشراءِ.'},
+ {q:'أقدّرُ ناتجَ الطرحِ للمرتبةِ الملونِ رقمُها باللونِ الأحمرِ:',a:821453,b:450971,p:10000,s1:''},
+ {q:'أقدّرُ ناتجَ الطرحِ للمرتبةِ الملونِ رقمُها باللونِ الأحمرِ:',a:9765740,b:2257303,p:100000,s1:'',remember:true}];
+function L2(p){
+  p.innerHTML=head('٢','تقديرُ نواتجِ الطرحِ','٥١–٥٣','أستعملُ التقريبَ لأقدّرَ ناتجَ الطرحِ.','<mark>التقديرُ</mark>')+
+    learnBox('حصدَ ١٤٣٩٣٠ متراً مربعاً من الرزِّ بوساطةِ المكائنِ من الأراضي البالغةِ مساحتُها ٣٧٨٢٤٠ متراً مربعاً. ما مساحةُ المنطقةِ غيرِ المحصودةِ تقريباً؟')+
+    ruleBox('تعلمتُ سابقاً تقديرَ نواتجِ الجمعِ باستعمالِ التقريبِ. ويمكنني تقديرَ نواتجِ الطرحِ باستعمالِ التقريبِ بالطريقةِ نفسِها، أكتبُ <mark>تقديرَ</mark> ناتجِ الطرحِ باستعمالِ الرمزِ (≈)')+
+    `<div class="fold"><span class="tag green">الأمثلةُ</span>
+      <div class="extabs" id="extabs">${EX2.map((_,k)=>`<button data-ex="${k}" aria-selected="${k===0}">مثال ${ar(k+1)}</button>`).join('')}</div>
+      <div class="exline"><span class="exno" id="exNo">١</span><span id="exTitle"></span></div>
+      ${coachHTML('c2','')}<div class="rsteps" id="rsteps"></div>
+      <div class="step-ctl"><button class="btn" id="r2next">الخطوةُ التاليةُ<svg><use href="#i-arrow"/></svg></button><button class="btn ghost" id="r2reset">أعِدْ</button></div>
+      ${toEx('L2')}</div>`;
+  let k=0,s=0,steps=[];
+  const co=$('#c2');
+  function build(kk){k=kk;s=0;const e=EX2[k];$('#exNo').textContent=ar(k+1);$('#exTitle').textContent=e.q;$$('#extabs button').forEach((b,j)=>b.setAttribute('aria-selected',String(j===k)));
+    const ra=roundTo(e.a,e.p), rb=roundTo(e.b,e.p);
+    const pn=PNAME[e.p][0];
+    steps=[
+     {html:`<div class="rrow"><b>${e.s1||`أقرّبُ لأقربِ ${e.p===10000?'عشرةِ آلافٍ':'مئةِ ألفٍ'} (المرتبةُ الملوّنةُ)`}</b>${e.note?`<span class="mini" style="border:1px solid var(--paper-line);border-radius:8px;padding:2px 8px">${e.note}</span>`:''}</div>`,
+      say:`لنقرّبْ لأقربِ ${e.p===10000?'عشرةِ آلافٍ':'مئةِ ألفٍ'}. المرتبةُ التي نقرّبُ إليها هي <b>${pn}</b> (تحتَها خطٌّ أحمرُ). ننظرُ إلى الرقمِ الذي على <b>يمينِها</b> مباشرةً (في الدائرةِ الزرقاءِ): إذا كانَ ٥ أو أكبرَ نضيفُ ١، وإذا كانَ أصغرَ من ٥ يبقى الرقمُ كما هو، ثم نضعُ أصفاراً.`},
+     {html:`<div class="rrow">${roundHTML(e.a,e.p)}<span class="arrow">≈</span><span class="round">${ar(ra)}</span><span class="why">${why(e.a,e.p)}</span></div>`,say:why(e.a,e.p)+'، فيصبحُ '+ar(ra)+'.'},
+     {html:`<div class="rrow">${roundHTML(e.b,e.p)}<span class="arrow">≈</span><span class="round">${ar(rb)}</span><span class="why">${why(e.b,e.p)}</span></div>`,say:why(e.b,e.p)+'، فيصبحُ '+ar(rb)+'.'},
+     {html:`<div class="rrow"><b>${e.s1?'الخطوةُ (٢): أطرحُ العددينِ بعدَ التقريبِ':'أطرحُ العددينِ بعدَ التقريبِ'}</b></div><div class="rrow"><div class="vbox" id="r2sub" style="min-width:280px"></div><span class="why">التقديرُ</span></div>`,
+      say:`الآن نطرحُ العددينِ المقرّبينِ: ${ar(ra)} − ${ar(rb)}. ${subPlan(ra,rb).steps.some(x=>x.need)?'انتبهْ: هنا نحتاجُ <b>إعادةَ تسميةٍ</b>، وستراها فوقَ الأرقامِ.':'لا نحتاجُ إعادةَ تسميةٍ هنا.'}`,
+      run:async()=>{const w=CW($('#r2sub'),{a:ra,b:rb,skin:'vert',mode:'demo'});let r;while((r=await w.next())&&!r.last)await wait(260);}},
+     {html:`<div class="rrow"><b>${e.w||`${ar(e.a)} − ${ar(e.b)} ≈ ${ar(ra)} − ${ar(rb)} = ${ar(ra-rb)}`}</b></div>${e.remember?'<div class="rule" style="margin-top:6px"><svg><use href="#i-bulb"/></svg><span><b class="red">أتذكرُ:</b> إذا كانَ الرقمُ إلى يمينِ المرتبةِ التي أقرّبُ إليها أكبرَ أو يساوي ٥ أضيفُ واحداً إلى الرقمِ في مرتبةِ التقريبِ.</span></div>':''}`,
+      say:`إذن الناتجُ التقريبيُّ <b>${ar(ra-rb)}</b>. لاحظْ أننا نكتبُ الرمزَ ≈ لأنّه تقديرٌ وليسَ ناتجاً دقيقاً.`}];
+    $('#rsteps').innerHTML='';say(co,'اضغطْ «الخطوةُ التاليةُ» لنقدّرَ الناتجَ معاً.');$('#r2next').disabled=false;}
+  async function nx(){if(s>=steps.length)return;const st=steps[s++];const d=document.createElement('div');d.innerHTML=st.html;d.style.animation='fbIn .45s var(--ease) both';$('#rsteps').append(d);say(co,st.say,s===steps.length?'good':null);sfx.pop();if(st.run)await st.run();if(s>=steps.length)$('#r2next').disabled=true;}
+  $('#r2next').addEventListener('click',nx);$('#r2reset').addEventListener('click',()=>build(k));
+  $('#extabs').addEventListener('click',e=>{const b=e.target.closest('[data-ex]');if(b){sfx.tap();build(+b.dataset.ex);}});
+  build(0);
+}
+
+/* Lesson 3: open number sentences */
+const EX3=[
+ {q:'أكتبُ جملةً عدديةً مفتوحةً لأجدَ عددَ الأشخاصِ الذين يجبُ صعودُهم إلى الباخرةِ.',sent:'١٧٣٥ + ☐ = ٢٥٠٠',a:2500,b:1735,known:1735,end:['لذا العددُ المجهولُ هو ٧٦٥','لذا عددُ الركابِ الذين ينتظرونَ الصعودَ هو ٧٦٥ راكباً.']},
+ {q:'أحلُّ الجملَ العدديةَ المفتوحةَ لأجدَ العددَ المجهولَ في ☐:',sent:'☐ + ٤٠٨٣٢١ = ٧٣٠٢١٥',a:730215,b:408321,known:408321,end:['لذا العددُ المجهولُ هو ٣٢١٨٩٤']},
+ {q:'أحلُّ الجملَ العدديةَ المفتوحةَ لأجدَ العددَ المجهولَ في ☐:',sent:'٩٣٠٠٠٠٠ − ☐ = ٥٦٠٨٢٤٥',a:9300000,b:5608245,known:5608245,minus:true,end:['لذا العددُ المجهولُ هو ٣٦٩١٧٥٥']},
+ {q:'تحتوي محطةٌ لتوزيعِ قناني الغازِ السائلِ على ٦٣٢٧٠٠ قنينةِ غازٍ بيعَ من القناني ٣٧٥٤٦٠. أكتبُ جملةً عدديةً مفتوحةً تُعبّرُ عن عددِ القناني المتبقيةِ في المحطةِ:',sent:'٣٧٥٤٦٠ + ☐ = ٦٣٢٧٠٠',a:632700,b:375460,known:375460,end:['لذا العددُ المفقودُ هو ٢٥٧٢٤٠','لذا عددُ قناني الغازِ المتبقيةِ هي ٢٥٧٢٤٠.']}];
+function L3(p){
+  p.innerHTML=head('٣','الجُمَلُ العدديةُ المفتوحةُ','٥٤–٥٦','أجدُ العددَ المفقودَ وأكتبُ مجموعةَ الحلِّ للجملةِ العدديةِ المفتوحةِ.','<mark>الجملةُ المفتوحةُ</mark> · <mark>العددُ المجهولُ</mark>')+
+    learnBox('تتسعُ باخرةٌ سياحيةٌ لـ ٢٥٠٠ شخصٍ صعدَ إلى الباخرةِ ١٧٣٥ شخصاً. ما عددُ الأشخاصِ الذين يجبُ صعودُهم إلى الباخرةِ حتى يكتملَ العددُ الكليُّ؟')+
+    ruleBox('<mark>الجملةُ المفتوحةُ:</mark> هي جملةٌ رياضيةٌ تحتوي على عددٍ مجهولٍ واحدٍ أو أكثرَ فيها، وحلُّها يعني إيجادَ العددِ المجهولِ.')+
+    `<div class="fold"><span class="tag green">الأمثلةُ</span>
+      <div class="extabs" id="extabs">${EX3.map((_,k)=>`<button data-ex="${k}" aria-selected="${k===0}">مثال ${ar(k+1)}</button>`).join('')}</div>
+      <div class="exline"><span class="exno" id="exNo">١</span><span id="exTitle"></span></div>
+      <div id="ex3"></div>${toEx('L3')}</div>`;
+  const show=k=>{const e=EX3[k];$('#exNo').textContent=ar(k+1);$('#exTitle').textContent=e.q;$$('#extabs button').forEach((b,j)=>b.setAttribute('aria-selected',String(j===k)));
+    const whole=e.a, part=e.b, unk=e.a-e.b;
+    $('#ex3').innerHTML=`<div class="eqline" style="justify-content:flex-start;margin:8px 0">${e.sent.replace('☐','<span class="bx" style="pointer-events:none">؟</span>')}</div>
+      <div class="bar-model"><div class="bm-whole">${ar(whole)} الكلُّ</div><div class="bm-parts"><div class="bm-a" style="flex:${part}">${ar(part)}</div><div class="bm-b" style="flex:${Math.max(unk,whole*.18)}">؟</div></div></div>
+      <p style="margin:6px 0"><b>أستعملُ العلاقةَ بينَ الجمعِ والطرحِ${k===0?' لأجدَ العددَ المجهولَ':''}:</b> ${ar(whole)} − ${ar(part)} = ☐</p>
+      <div id="ex3play"></div><div id="ex3end" hidden>${e.end.map(t=>`<p style="margin:4px 0;font-weight:700">${t}</p>`).join('')}</div>`;
+    exPlayer($('#ex3play'),{a:whole,b:part,skin:'vert',onDone:()=>{$('#ex3end').hidden=false;},start:`انظرْ إلى النموذجِ الشريطيِّ: الكلُّ ${ar(whole)}، وجزءٌ معروفٌ ${ar(part)}. الجزءُ المجهولُ = الكلُّ − الجزءُ المعروفُ. لنطرحْ ونعيدِ التسميةَ عندَ الحاجةِ.`});};
+  $('#extabs').addEventListener('click',e=>{const b=e.target.closest('[data-ex]');if(b){sfx.tap();show(+b.dataset.ex);}});
+  show(0);
+}
+
+/* Lesson 4: working backwards */
+function L4(p){
+  p.innerHTML=head('٤','خطةُ حلِّ المسألةِ (الحلُّ العكسيُّ)','٥٧–٥٨','أستعملُ خطةَ الحلِّ العكسي لحلِّ المسألةِ.','')+
+    learnBox('توقفتْ طائرةُ شحنٍ للنقلِ السريعِ في مطارِ بغدادَ وأفرغتْ ١٢٣٥٠ كغم من حمولتِها، ثم توقفتْ في مطارِ البصرةِ وأفرغتْ ١١٤٥٠ كغم من حمولتِها وبقيَ في الطائرةِ ٧٦٥٠ كغم. فكم كانتْ حمولةُ الطائرةِ في البدايةِ؟')+
+    `<div class="fold">${coachHTML('c4','في الحلِّ العكسيِّ نعرفُ <b>النهايةَ</b> ونريدُ <b>البدايةَ</b>. نمشي إلى الخلفِ، ونعكسُ كلَّ عمليةٍ: ما أُفرغَ (طُرحَ) نعيدُه (نجمعُه).')}
+      <div class="timeline" id="tl">
+        <div class="tnode q" id="t0"><small>البداية</small><b>؟</b></div>
+        <div class="tarrow"><span class="f">− ١٢٣٥٠</span><i>←</i><small>بغداد</small></div>
+        <div class="tnode q" id="t1"><small>بعدَ بغداد</small><b>؟</b></div>
+        <div class="tarrow"><span class="f">− ١١٤٥٠</span><i>←</i><small>البصرة</small></div>
+        <div class="tnode" id="t2"><small>بقيَ في الطائرة</small><b>٧٦٥٠</b></div>
+      </div>
+      <div class="step-ctl" style="justify-content:center"><button class="btn" id="l4go">اعكسِ الخطواتِ<svg><use href="#i-arrow"/></svg></button><button class="btn ghost" id="l4reset">أعِدْ</button></div>
+      <div class="plan4">
+        <div class="p4 a"><h4>أفهمُ</h4><p><b>ماذا أعرفُ عن المسألةِ؟</b> طائرةُ شحنٍ أفرغتْ ١٢٣٥٠ كغم من حمولتِها في مطارِ بغدادَ. ثم ١١٤٥٠ كغم من حمولتِها في مطارِ البصرةِ. بقيَ في الطائرةِ ٧٦٥٠ كغم من الحمولةِ.</p><p><b>ما المطلوبُ إيجادُه في المسألةِ؟</b> معرفةُ حمولةِ الطائرةِ في البدايةِ.</p></div>
+        <div class="p4 b"><h4>أخطّطُ</h4><p><b>كيفَ أحلُّ المسألةَ؟</b> أستعملُ طريقةَ الحلِّ العكسي. أبدأُ بمعرفةِ الحمولةِ التي بقيتْ في الطائرةِ وأستعملُ الجمعَ للحصولِ على المطلوبِ.</p></div>
+        <div class="p4 c"><h4>أحلُّ</h4><p>أضفِ الحمولةَ المتبقيةَ إلى الحمولةِ التي أُفرغتْ في مطارِ البصرةِ: ٧٦٥٠ + ١١٤٥٠ = ١٩١٠٠ كغم حمولةُ الطائرةِ قبلَ التفريغِ في مطارِ البصرةِ.</p><p>الآنَ أضفْ اليها الحمولةَ التي أفرغتْها الطائرةُ في مطارِ بغدادَ: ١٩١٠٠ + ١٢٣٥٠ = ٣١٤٥٠ كغم الحمولةُ التي كانتْ في الطائرةِ في البدايةِ.</p></div>
+        <div class="p4 d"><h4>أتحقّقُ</h4><p>هل مجموعُ الحمولةِ ٣١٤٥٠ كغم؟</p>${vertHTML([dg(7650),dg(11450),dg(12350),'rule',dg(31450)],'+')}<p>٧٦٥٠ الحمولةُ المتبقيةُ في الطائرةِ · ١١٤٥٠ أفرغتْها في البصرةِ · ١٢٣٥٠ أفرغتْها في بغدادَ. لذا الإجابةُ صحيحةٌ.</p></div>
+      </div>${toEx('L4')}</div>`;
+  const co=$('#c4');let s=0;
+  const STEPS=[
+    async()=>{say(co,'نبدأُ من النهايةِ: بقيَ <b>٧٦٥٠</b> كغم. في البصرةِ <b>أُفرغَ</b> ١١٤٥٠، فقبلَ البصرةِ كانَ أكثرَ. نعكسُ الطرحَ إلى <b>جمعٍ</b>: ٧٦٥٠ + ١١٤٥٠ = ١٩١٠٠');
+      const t=$('#t1');t.classList.remove('q');t.classList.add('reveal');t.querySelector('b').textContent='١٩١٠٠';$$('#tl .tarrow')[1].innerHTML='<span class="r">+ ١١٤٥٠</span><i>→</i><small>نعكسُ</small>';sfx.pop();},
+    async()=>{say(co,'وقبلَ بغدادَ: أُفرغَ ١٢٣٥٠، فنجمعُ: ١٩١٠٠ + ١٢٣٥٠ = <b>٣١٤٥٠</b> كغم. هذه حمولةُ الطائرةِ في البدايةِ!','good');
+      const t=$('#t0');t.classList.remove('q');t.classList.add('reveal');t.querySelector('b').textContent='٣١٤٥٠';$$('#tl .tarrow')[0].innerHTML='<span class="r">+ ١٢٣٥٠</span><i>→</i><small>نعكسُ</small>';sfx.ok();$('#l4go').disabled=true;}];
+  $('#l4go').addEventListener('click',()=>{if(s<STEPS.length)STEPS[s++]();});
+  $('#l4reset').addEventListener('click',()=>{L4(p);});
+}
+
+/* ---------- Every exercise of the chapter, as printed (pp.46–61) ---------- */
+const UNITS=[{k:'c',n:'مسألةُ الفصلِ'},{k:'pre',n:'الاختبارُ القبليُّ'},{k:'L1',n:'الدرس ١'},{k:'L2',n:'الدرس ٢'},{k:'L3',n:'الدرس ٣'},{k:'L4',n:'الدرس ٤'},{k:'rev',n:'مراجعةُ الفصلِ'},{k:'test',n:'اختبارُ الفصلِ'}];
+const C=(a,b,o={})=>({type:'col',a,b,skin:'vert',...o}), T=(a,b,n,o={})=>({type:'col',a,b,n,skin:'table',...o});
+const Bx=(tpl,ans,o={})=>({type:'boxes',tpl,ans,...o}), CH=(prompt,opts)=>({type:'choice',prompt,opts}), W=()=>({type:'write'});
+const H=(a,b)=>({help:{a,b}});
+const red=(s,k)=>s.split('').map((d,i)=>i===k?`<span style="color:#d9468f;font-weight:800">${d}</span>`:d).join('');
+const I_PV='أستعملُ جدولَ القيمةِ المكانيةِ لأجدَ ناتجَ الطرحِ:', I_PV2='أستعملُ جدولَ القيمةِ المكانيةِ وأجدُ ناتجَ الطرحِ:', I_FIND='أجدُ ناتجَ الطرحِ:',
+  I_CHK='أجدُ ناتجَ الطرحِ، ثُمَّ أتحقّقُ من صحةِ الحلِّ باستعمالِ الجمعِ أو الطرحِ:', I_EST='أقدّرُ ناتجَ الجمعِ بالتقريبِ لأقربِ مئةٍ:', I_BOX='أكتبُ العددَ المناسبَ في ☐:',
+  I_VERT='أستعملُ الطرحَ العموديَّ وأجدُ ناتجَ الطرحِ:', I_VCHK='أستعملُ الطرحَ العموديَّ وأجدُ ناتجَ الطرحِ وأتحقّقُ:', I_PALM='أستعملُ الجدولَ المجاورَ لحلِّ السؤالينِ:',
+  I_OPEN='أحلُّ الجملَ العدديةَ المفتوحةَ بإيجادِ العددِ المجهولِ في ☐:', I_WOPEN='أكتبُ جملةً عدديةً مفتوحةً وأجدُ العددَ المجهولَ فيها:',
+  I_E10='أقدّرُ ناتجَ الطرحِ لأقربِ ١٠ آلافٍ:', I_C10='أحوّطُ الإجابةَ الصحيحةَ لأقدّرَ ناتجَ الطرحِ لأقربِ ١٠ آلافٍ:', I_COL='أقدّرُ ناتجَ الطرحِ حسبَ مرتبةِ الرقمِ الملونِ:',
+  I_C100='أحوّطُ الإجابةَ الصحيحةَ لتقديرِ ناتجِ الطرحِ لأقربِ مئةِ ألفٍ:', I_F100='أجدُ ناتجَ الطرحِ بالتقريبِ لأقربِ مئةِ ألفٍ:', I_REV='أستعملُ خطةَ الحلِّ العكسي لحلِّ المسائلِ:',
+  I_E1000='أقدّرُ ناتجَ الطرحِ لأقربِ ألفٍ:', I_TEST_E='أقدّرُ ناتجَ الطرحِ بالتقريبِ لأقربِ ألفٍ:';
+const EST=(a,b,p)=>({est:{a,b,p}});
+const opts3=(c,w1,w2)=>[[c,null],w1,w2];
+const Q=(u,sec,no,p,ins,text,parts,o={})=>({u,sec,no,p,ins,text,parts,...o});
 const QS=[
- {g:'c',no:null,p:46,ins:'',kind:'word',text:'ناقلةُ نفطٍ تتسعُ خزاناتُها إلى ٣٥٨٦٤٠ برميلاً، مُلئتْ خزاناتُها بـ ٢٧٥١٢٠ برميلاً. كم برميل يلزمُ لملءِ الناقلةِ؟',a:358640,b:275120,unit:'برميلاً'},
- pv('pre',1,47,I_PV,9586,754,4), pv('pre',2,47,I_PV,6345,2147,4), pv('pre',3,47,I_PV,6180,5426,4), pv('pre',4,47,I_PV,8201,4938,4),
- vt('pre',5,47,I_FIND,8624,4351), vt('pre',6,47,I_FIND,5603,4275), vt('pre',7,47,I_FIND,6507,3372),
- vt('pre',8,47,I_FIND,7001,1904), vt('pre',9,47,I_FIND,8000,543), vt('pre',10,47,I_FIND,5000,2957),
- eq('pre',11,47,I_CHK,'','٥٣٨٩ − ٤٤٣٦ = {0}<span class="lbl">التحقق:</span>{1} + {2} = {3}',null,{sub:[5389,4436],
-   check:v=>v[0]===953&&v[3]===5389&&((v[1]===953&&v[2]===4436)||(v[1]===4436&&v[2]===953)),
-   h1:'أطرحُ أولاً، ثُمَّ أجمعُ الناتجَ مع العددِ المطروحِ لأتحققَ.',post:[['التحقق: ٩٥٣ + ٤٤٣٦ = ٥٣٨٩','أجمعُ الناتجَ مع المطروحِ']],fill:[953,953,4436,5389]}),
- eq('pre',12,47,I_CHK,'','٧٥٢٤ + ١٦٢٨ = {0}<span class="lbl">التحقق:</span>{1} − {2} = {3}',null,{
-   check:v=>v[0]===9152&&v[1]===9152&&((v[2]===1628&&v[3]===7524)||(v[2]===7524&&v[3]===1628)),
-   h1:'أجمعُ أولاً، ثُمَّ أطرحُ أحدَ العددينِ من الناتجِ لأتحققَ.',h2:'٤ + ٨ = ١٢: أكتبُ ٢ وأحملُ ١ إلى العشراتِ.',
-   sol:[['٧٥٢٤ + ١٦٢٨ = ٩١٥٢','أجمعُ'],['التحقق: ٩١٥٢ − ١٦٢٨ = ٧٥٢٤','أطرحُ أحدَ العددينِ من الناتجِ']],fill:[9152,9152,1628,7524]}),
- eq('pre',13,47,I_EST,'٥٤٣ + ٣٥٢','{0} + {1} = {2}',[500,400,900],{h1:'أقرّبُ كلَّ عددٍ لأقربِ مئةٍ أولاً: أنظرُ إلى رقمِ العشراتِ.',h2:'٥٤٣: رقمُ العشراتِ ٤ أصغرُ من ٥. ٣٥٢: رقمُ العشراتِ ٥.',
-   sol:[['٥٤٣ ≈ ٥٠٠','رقمُ العشراتِ ٤ < ٥'],['٣٥٢ ≈ ٤٠٠','رقمُ العشراتِ ٥ فأقرّبُ للأعلى'],['٥٠٠ + ٤٠٠ = ٩٠٠','']]}),
- eq('pre',14,47,I_EST,'٦٢١٠ + ٢٢٦١','{0} + {1} = {2}',[6200,2300,8500],{h1:'أقرّبُ كلَّ عددٍ لأقربِ مئةٍ أولاً: أنظرُ إلى رقمِ العشراتِ.',h2:'٦٢١٠: رقمُ العشراتِ ١. ٢٢٦١: رقمُ العشراتِ ٦ أكبرُ من ٥.',
-   sol:[['٦٢١٠ ≈ ٦٢٠٠','رقمُ العشراتِ ١ < ٥'],['٢٢٦١ ≈ ٢٣٠٠','رقمُ العشراتِ ٦ > ٥ فأقرّبُ للأعلى'],['٦٢٠٠ + ٢٣٠٠ = ٨٥٠٠','']]}),
- eq('pre',15,47,I_BOX,'','٢٣٥٧ + {0} = ٥٦٤٣',[3286],{sub:[5643,2357],h1:'أجدُ العددَ الناقصَ بالطرحِ: ٥٦٤٣ − ٢٣٥٧'}),
- eq('pre',16,47,I_BOX,'','{0} − ١٩٢٥ = ٤٠٧٥',[6000],{h1:'العددُ الناقصُ هو المطروحُ منه، فأجمعُ: ٤٠٧٥ + ١٩٢٥',sol:[['☐ = ٤٠٧٥ + ١٩٢٥',''],['= ٦٠٠٠','أجمعُ'],['التحقق: ٦٠٠٠ − ١٩٢٥ = ٤٠٧٥','']]}),
- eq('pre',17,47,I_BOX,'','٨٥٢٤ − {0} = ٤٧٠٦',[3818],{sub:[8524,4706],h1:'أجدُ العددَ الناقصَ بالطرحِ: ٨٥٢٤ − ٤٧٠٦'}),
- eq('pre',18,47,I_BOX,'','{0} + ٤٦٠٢ = ٧٥١٢',[2910],{sub:[7512,4602],h1:'أجدُ العددَ الناقصَ بالطرحِ: ٧٥١٢ − ٤٦٠٢'}),
- pv('t',1,49,I_PV2,76181,34654,5), pv('t',2,49,I_PV2,980900,631375,6),
- vt('t',3,49,I_VERT,63275,25491), vt('t',4,49,I_VERT,753714,478650), vt('t',5,49,I_VERT,9000000,6949035),
- {g:'t',no:6,p:49,ins:'',kind:'word',text:'كتلةٌ جليديةٌ تزنُ ٤٣٧٦٥١ كغم، بدأتْ بالذوبانِ حتى أصبحَ وزنُها ١٢٩٣٥٠ كغم. ما الوزنُ الذي فقدتْهُ الكتلةُ الجليديةُ؟',a:437651,b:129350,unit:'كغم'},
- {g:'s',no:null,p:49,ins:'',kind:'vert',a:3516,b:2804,speak:true,text:'لماذا أحتاجُ إلى إعادةِ التسميةِ عندَ إيجادِ ناتجِ الطرحِ: ٣٥١٦ − ٢٨٠٤؟',
-  post:[['أحتاجُ إعادةَ التسميةِ لأن ٥ < ٨ في منزلةِ المئاتِ',null]]},
- pv('h',7,50,I_PV2,81932,37460,5), pv('h',8,50,I_PV2,6302000,1758012,7),
- vt('h',9,50,I_VCHK,52000,32418,'vertchk'), vt('h',10,50,I_VCHK,9900000,6817103,'vertchk'),
- {g:'h',no:11,p:50,ins:'',kind:'word',text:'طائرةٌ تتسعُ إلى ٤٠٠ راكباً، صعدَ إلى الطائرةِ ١٤٧ راكباً. كم راكباً يتوجبُ صعودُهم حتى يكتملَ العددُ؟',a:400,b:147,unit:'راكباً'},
- {g:'f',no:12,p:50,ins:'<b class="red">تحدٍّ:</b> أضعُ العددَ المناسبَ في ☐:',kind:'chal',ans:[4,1,7,9,3,6],
-  h1:'أبدأُ من الآحادِ: ٧ − ☐ = ٣.',h2:'في العشراتِ: ☐ − ٦ = ٥ تحتاجُ إعادةَ تسميةٍ، أي ☐ + ١٠ − ٦ = ٥.',
-  sol:[['الآحاد: ٧ − ٤ = ٣','☐ = ٤'],['العشرات: ١١ − ٦ = ٥','☐ = ١ وأعدتُ التسميةَ'],['المئات: ٤ − ٤ = ٠','٥ أصبحت ٤'],['آحاد الألوف: ٧ − ٧ = ٠','☐ = ٧'],
-   ['عشرات الألوف: ١٣ − ٩ = ٤','☐ = ٩ وأعدتُ التسميةَ'],['مئات الألوف: ٥ − ٢ = ٣','☐ = ٣'],['آحاد الملايين: ٦ − ٥ = ١','☐ = ٦']]},
- {g:'f',no:13,p:50,ins:I_PALM,kind:'palm',text:'كم يزيدُ عددُ أشجارِ النخيلِ في البصرةِ على عددِها في النجفِ؟',a:10475000,b:4399200},
- {g:'f',no:14,p:50,ins:I_PALM,kind:'palm',text:'كم يزيدُ عددُ أشجارِ النخيلِ في البصرةِ على عددِها بالسماوةِ؟',a:10475000,b:1200300},
- {g:'w',no:null,p:50,ins:'',kind:'write',text:'مسألةٌ حياتيةٌ عن طرحِ الأعدادِ ضمنَ الملايينِ.',h1:'فكّرْ في عددٍ كبيرٍ من حياتِكَ: سكانُ مدينةٍ، أكياسُ حبوبٍ، براميلُ نفطٍ… ثم اطرحْ منه.'}
+ Q('c','',null,46,'','ناقلةُ نفطٍ تتسعُ خزاناتُها إلى ٣٥٨٦٤٠ برميلاً، مُلئتْ خزاناتُها بـ ٢٧٥١٢٠ برميلاً. كم برميل يلزمُ لملءِ الناقلةِ؟',[C(358640,275120,{unit:'برميلاً'})]),
+ /* pre-test p.47 */
+ Q('pre','الاختبارُ القبليُّ',1,47,I_PV,'',[T(9586,754,4)]), Q('pre','الاختبارُ القبليُّ',2,47,I_PV,'',[T(6345,2147,4)]),
+ Q('pre','الاختبارُ القبليُّ',3,47,I_PV,'',[T(6180,5426,4)]), Q('pre','الاختبارُ القبليُّ',4,47,I_PV,'',[T(8201,4938,4)]),
+ ...[[5,8624,4351],[6,5603,4275],[7,6507,3372],[8,7001,1904],[9,8000,543],[10,5000,2957]].map(([n,a,b])=>Q('pre','الاختبارُ القبليُّ',n,47,I_FIND,'',[C(a,b)])),
+ Q('pre','الاختبارُ القبليُّ',11,47,I_CHK,'٥٣٨٩ − ٤٤٣٦ = ............',[C(5389,4436),Bx('<span class="lbl">التحقق:</span>{0} + {1} = {2}',null,{fill:[953,4436,5389],check:v=>v[2]===5389&&((v[0]===953&&v[1]===4436)||(v[0]===4436&&v[1]===953))})],{h1:'أطرحُ أولاً، ثم أتحقّقُ: الناتجُ + العددُ المطروحُ = العددُ الأولُ.'}),
+ Q('pre','الاختبارُ القبليُّ',12,47,I_CHK,'',[Bx('٧٥٢٤ + ١٦٢٨ = {0}',[9152]),Bx('<span class="lbl">التحقق:</span>{0} − {1} = {2}',null,{fill:[9152,1628,7524],check:v=>v[0]===9152&&((v[1]===1628&&v[2]===7524)||(v[1]===7524&&v[2]===1628))})],
+   {h1:'هنا جمعٌ: أجمعُ أولاً، ثم أتحقّقُ بطرحِ أحدِ العددينِ من الناتجِ.',sol:[['٧٥٢٤ + ١٦٢٨ = ٩١٥٢','أجمعُ'],['٩١٥٢ − ١٦٢٨ = ٧٥٢٤','أتحقّقُ بالطرحِ']]}),
+ Q('pre','الاختبارُ القبليُّ',13,47,I_EST,'٥٤٣ + ٣٥٢',[Bx('{0} + {1} = {2}',[500,400,900])],{sol:[['٥٤٣ ≈ ٥٠٠','رقمُ العشراتِ ٤ < ٥'],['٣٥٢ ≈ ٤٠٠','رقمُ العشراتِ ٥ فأقرّبُ للأعلى'],['٥٠٠ + ٤٠٠ = ٩٠٠','']],h1:'أقرّبُ كلَّ عددٍ لأقربِ مئةٍ: أنظرُ إلى رقمِ العشراتِ.'}),
+ Q('pre','الاختبارُ القبليُّ',14,47,I_EST,'٦٢١٠ + ٢٢٦١',[Bx('{0} + {1} = {2}',[6200,2300,8500])],{sol:[['٦٢١٠ ≈ ٦٢٠٠','رقمُ العشراتِ ١ < ٥'],['٢٢٦١ ≈ ٢٣٠٠','رقمُ العشراتِ ٦ > ٥ فأقرّبُ للأعلى'],['٦٢٠٠ + ٢٣٠٠ = ٨٥٠٠','']],h1:'أقرّبُ كلَّ عددٍ لأقربِ مئةٍ: أنظرُ إلى رقمِ العشراتِ.'}),
+ Q('pre','الاختبارُ القبليُّ',15,47,I_BOX,'',[Bx('٢٣٥٧ + {0} = ٥٦٤٣',[3286],H(5643,2357))]),
+ Q('pre','الاختبارُ القبليُّ',16,47,I_BOX,'',[Bx('{0} − ١٩٢٥ = ٤٠٧٥',[6000])],{h1:'العددُ الناقصُ هو المطروحُ منه، فأجمعُ: ٤٠٧٥ + ١٩٢٥.',sol:[['☐ = ٤٠٧٥ + ١٩٢٥ = ٦٠٠٠','أجمعُ'],['٦٠٠٠ − ١٩٢٥ = ٤٠٧٥ ✓','أتحقّقُ']]}),
+ Q('pre','الاختبارُ القبليُّ',17,47,I_BOX,'',[Bx('٨٥٢٤ − {0} = ٤٧٠٦',[3818],H(8524,4706))]),
+ Q('pre','الاختبارُ القبليُّ',18,47,I_BOX,'',[Bx('{0} + ٤٦٠٢ = ٧٥١٢',[2910],H(7512,4602))]),
+ /* lesson 1 pp.49–50 */
+ Q('L1','أتأكدُ',1,49,I_PV2,'',[T(76181,34654,5)]), Q('L1','أتأكدُ',2,49,I_PV2,'',[T(980900,631375,6)]),
+ Q('L1','أتأكدُ',3,49,I_VERT,'',[C(63275,25491)]), Q('L1','أتأكدُ',4,49,I_VERT,'',[C(753714,478650)]), Q('L1','أتأكدُ',5,49,I_VERT,'',[C(9000000,6949035)]),
+ Q('L1','أتأكدُ',6,49,'','كتلةٌ جليديةٌ تزنُ ٤٣٧٦٥١ كغم، بدأتْ بالذوبانِ حتى أصبحَ وزنُها ١٢٩٣٥٠ كغم. ما الوزنُ الذي فقدتْهُ الكتلةُ الجليديةُ؟',[C(437651,129350,{unit:'كغم'})]),
+ Q('L1','أتحدثُ',null,49,'','لماذا أحتاجُ إلى إعادةِ التسميةِ عندَ إيجادِ ناتجِ الطرحِ: ٣٥١٦ − ٢٨٠٤؟',[C(3516,2804),
+   CH('إذن، لماذا احتجتَ إعادةَ التسميةِ؟',opts3('لأنّ ٥ < ٨ في منزلةِ المئاتِ',['لأنّ ٦ > ٤ في منزلةِ الآحادِ','في الآحادِ ٦ أكبرُ من ٤، فطرحنا مباشرةً دونَ إعادةِ تسميةٍ.'],['لأنّ العددَ كبيرٌ','حجمُ العددِ لا يقرّرُ. ننظرُ إلى كلِّ منزلةٍ: هل الرقمُ العلويُّ أصغرُ من السفليِّ؟']))]),
+ Q('L1','أحلُّ',7,50,I_PV2,'',[T(81932,37460,5)]), Q('L1','أحلُّ',8,50,I_PV2,'',[T(6302000,1758012,7)]),
+ Q('L1','أحلُّ',9,50,I_VCHK,'',[C(52000,32418,{check:true})]), Q('L1','أحلُّ',10,50,I_VCHK,'',[C(9900000,6817103,{check:true})]),
+ Q('L1','أحلُّ',11,50,'','طائرةٌ تتسعُ إلى ٤٠٠ راكباً، صعدَ إلى الطائرةِ ١٤٧ راكباً. كم راكباً يتوجبُ صعودُهم حتى يكتملَ العددُ؟',[C(400,147,{unit:'راكباً'})]),
+ Q('L1','أفكرُ',12,50,'<b class="red">تحدٍّ:</b> أضعُ العددَ المناسبَ في ☐:','',[{type:'chal',ans:[4,1,7,9,3,6]}],
+   {h1:'أبدأُ من الآحادِ: ٧ − ☐ = ٣.',h2:'في العشراتِ: ☐ − ٦ = ٥ تحتاجُ إعادةَ تسميةٍ، أي (☐ + ١٠) − ٦ = ٥، فالمربعُ = ١. وتصبحُ المئاتُ ٥ − ١ = ٤.',
+    sol:[['الآحاد: ٧ − ٤ = ٣','☐ = ٤'],['العشرات: ١١ − ٦ = ٥','☐ = ١ وأعدتُ التسميةَ'],['المئات: ٤ − ٤ = ٠','٥ أصبحتْ ٤'],['آحاد الألوف: ٧ − ٧ = ٠','☐ = ٧'],['عشرات الألوف: ١٣ − ٩ = ٤','☐ = ٩ وأعدتُ التسميةَ'],['مئات الألوف: ٥ − ٢ = ٣','☐ = ٣ (٦ أصبحتْ ٥)'],['آحاد الملايين: ٦ − ٥ = ١','☐ = ٦']]}),
+ Q('L1','أفكرُ',13,50,I_PALM,'كم يزيدُ عددُ أشجارِ النخيلِ في البصرةِ على عددِها في النجفِ؟',[C(10475000,4399200,{palm:true,unit:'نخلة'})]),
+ Q('L1','أفكرُ',14,50,I_PALM,'كم يزيدُ عددُ أشجارِ النخيلِ في البصرةِ على عددِها بالسماوةِ؟',[C(10475000,1200300,{palm:true,unit:'نخلة'})]),
+ Q('L1','أكتبُ',null,50,'','مسألةٌ حياتيةٌ عن طرحِ الأعدادِ ضمنَ الملايينِ.',[W()],{h1:'فكّرْ في عددٍ كبيرٍ من حياتِك: سكانُ مدينةٍ، أكياسُ حبوبٍ، براميلُ نفطٍ… ثم اطرحْ منه.'}),
+ /* lesson 2 pp.52–53 */
+ Q('L2','أتأكدُ',1,52,I_E10,'٩٥٢٨٠ − ٦٣٧٤١',[Bx('{0} − {1} = {2}',[100000,60000,40000])],EST(95280,63741,10000)),
+ Q('L2','أتأكدُ',2,52,I_E10,'٦٤٠٣٦١٦ − ٣٣٥٥٣٧٠',[Bx('{0} − {1} = {2}',[6400000,3360000,3040000])],EST(6403616,3355370,10000)),
+ Q('L2','أتأكدُ',3,52,I_C10,'٦٥٠٤١٦ − ١٦١٩٤٦',[CH('',opts3('٤٩٠٠٠٠',['٤٨٠٠٠٠','قرّبْ أولاً: ٦٥٠٤١٦ ≈ ٦٥٠٠٠٠ و ١٦١٩٤٦ ≈ ١٦٠٠٠٠، ثم اطرحْ.'],['٥١٠٠٠٠','انتبهْ: ١٦١٩٤٦ تُقرَّبُ إلى ١٦٠٠٠٠ لأنّ رقمَ الآلافِ ١ < ٥.']))],EST(650416,161946,10000)),
+ Q('L2','أتأكدُ',4,52,I_C10,'٧١٥٧٣٠ − ٣٢٢٠٦٤',[CH('',[['٣٩٠٠٠٠','قرّبْ: ٧١٥٧٣٠ ≈ ٧٢٠٠٠٠ لأنّ رقمَ الآلافِ ٥.'],['٤١٠٠٠٠','قرّبْ: ٣٢٢٠٦٤ ≈ ٣٢٠٠٠٠، ثم ٧٢٠٠٠٠ − ٣٢٠٠٠٠.'],['٤٠٠٠٠٠',null]])],EST(715730,322064,10000)),
+ Q('L2','أتأكدُ',5,52,'','أنتجَ مصنعُ إطاراتٍ ٤٣٧٨٢٠ إطاراً، سوّقَ منها ٢١٤٣١١ إطاراً. أقدّرُ عددَ الإطاراتِ المتبقيةِ في المخزنِ بالتقريبِ لأقربِ عشرةِ آلافٍ.',[Bx('{0} − {1} = {2}<span class="lbl">إطاراً تقريباً</span>',[440000,210000,230000])],EST(437820,214311,10000)),
+ Q('L2','أتحدثُ',null,52,'','لماذا يُقرّبُ ٤٧٥٢٦ إلى ٤٨٠٠٠؟',[CH('',opts3('لأنّ رقمَ المئاتِ ٥، و٥ أو أكثرُ يُضيفُ ١ إلى الآلافِ',['لأنّ رقمَ الآحادِ ٦ أكبرُ من ٥','عندَ التقريبِ لأقربِ ألفٍ ننظرُ إلى المنزلةِ التي على يمينِ الآلافِ مباشرةً فقط: المئات.'],['لأنّ رقمَ العشراتِ ٢ أصغرُ من ٥','العشراتُ ليستْ على يمينِ الآلافِ مباشرةً؛ ننظرُ إلى المئاتِ.']))]),
+ Q('L2','أحلُّ',6,53,I_COL,red('٦٧١٢٠',1)+' − '+red('١٥٧٦١',1),[Bx('{0} − {1} = {2}',[67000,16000,51000])],EST(67120,15761,1000)),
+ Q('L2','أحلُّ',7,53,I_COL,red('٥٦١٨٩٤',1)+' − '+red('٢١٦٥٤١',1),[Bx('{0} − {1} = {2}',[560000,220000,340000])],EST(561894,216541,10000)),
+ Q('L2','أحلُّ',8,53,I_C100,'٥٦٠٨٥١ − ٢٥٤٤١٧',[CH('',opts3('٣٠٠٠٠٠',['٢٠٠٠٠٠','٢٥٤٤١٧ تُقرَّبُ إلى ٣٠٠٠٠٠ لأنّ رقمَ عشراتِ الألوفِ ٥.'],['٤٠٠٠٠٠','٥٦٠٨٥١ تُقرَّبُ إلى ٦٠٠٠٠٠ و ٢٥٤٤١٧ إلى ٣٠٠٠٠٠.']))],EST(560851,254417,100000)),
+ Q('L2','أحلُّ',9,53,I_C100,'٨٥٣٧٥٠٤ − ٤٩٦٠٩٤٢',[CH('',[['٣٤٠٠٠٠٠','٨٥٣٧٥٠٤ ≈ ٨٥٠٠٠٠٠ و ٤٩٦٠٩٤٢ ≈ ٥٠٠٠٠٠٠.'],['٣٦٠٠٠٠٠','٨٥٣٧٥٠٤ ≈ ٨٥٠٠٠٠٠ لأنّ رقمَ عشراتِ الألوفِ ٣ < ٥.'],['٣٥٠٠٠٠٠',null]])],EST(8537504,4960942,100000)),
+ Q('L2','أحلُّ',10,53,I_F100,'',[Bx('٥٣٠٦٤٧٣ − ٤١٧٥١٨٠ ≈ {0}',[1100000])],EST(5306473,4175180,100000)),
+ Q('L2','أحلُّ',11,53,I_F100,'',[Bx('٦٧٢٨١٠٩ − ٢٧٠٨١٤٥ ≈ {0}',[4000000])],EST(6728109,2708145,100000)),
+ Q('L2','أحلُّ',12,53,'','زارَ المتحفَ العراقيَّ ٣٤٠٦٧٨ شخصاً من الذكورِ والإناثِ، فإذا كانَ عددُ الذكورِ ١٧٨٣١٢ شخصاً، أجدُ عددَ الإناثِ مقرّباً بالتقريبِ لأقربِ عشرةِ آلافٍ؟',[Bx('{0} − {1} = {2}',[340000,180000,160000])],EST(340678,178312,10000)),
+ Q('L2','أفكرُ',13,53,'<b class="red">أكتشفُ الخطأَ:</b> كتبتْ ليلى ناتجَ الطرحِ مُقدَّراً بالتقريبِ لأقربِ ألفٍ كالآتي:','٣٠٤٩٦٧ − ١٦٩٩٦٠ ≈ ١٣٥٠٠٠٠ . أكتشفُ خطأَ ليلى ثم أصحّحُهُ.',
+   [CH('ما خطأُ ليلى؟',opts3('كتبتْ صفراً زائداً في الناتجِ',['قرّبتْ ٣٠٤٩٦٧ خطأً','٣٠٤٩٦٧ لأقربِ ألفٍ = ٣٠٥٠٠٠، وهذا لا يغيّرُ أنّ الناتجَ يجبُ أن يكونَ أصغرَ من ٣٠٥٠٠٠.'],['كانَ يجبُ أن تجمعَ','المسألةُ طرحٌ، والخطأُ في عددِ الأصفارِ.'])),Bx('أصحّحُ: {0} − {1} = {2}',[305000,170000,135000])],EST(304967,169960,1000)),
+ Q('L2','أفكرُ',14,53,'','أكتبُ أيُّهما أسهلُ التقريبُ لأقربِ ألفٍ أم إلى عشرةِ آلافٍ لأقدّرَ ناتجَ الطرحِ: ٧٦٨٦٧٤ − ٣٧٣٥٤٤؟ وأجدُ ناتجَ الطرحِ في كلِّ مرةٍ.',
+   [Bx('<span class="lbl">لأقربِ ألفٍ:</span>{0} − {1} = {2}',[769000,374000,395000]),Bx('<span class="lbl">لأقربِ عشرةِ آلافٍ:</span>{0} − {1} = {2}',[770000,370000,400000]),
+    CH('أيُّهما أسهلُ؟',[['لأقربِ عشرةِ آلافٍ',null],['لأقربِ ألفٍ','كلاهما صحيحٌ، لكنّ ٧٧٠٠٠٠ − ٣٧٠٠٠٠ أسهلُ: أصفارٌ أكثرُ وأرقامٌ أقلُّ.']])],{est:{a:768674,b:373544,p:1000}}),
+ Q('L2','أكتبُ',null,53,'','مسألةٌ حياتيةٌ عن تقديرِ نواتجِ الطرحِ.',[W()],{h1:'استعملْ عددينِ كبيرينِ واطلبْ ناتجاً «تقريباً»، واكتبِ الرمزَ ≈.'}),
+ /* lesson 3 pp.55–56 */
+ Q('L3','أتأكدُ',1,55,I_OPEN,'',[Bx('٧٤٠٢ − ٥٣٨٧ = {0}',[2015],H(7402,5387))]),
+ Q('L3','أتأكدُ',2,55,I_OPEN,'',[Bx('٥٦٤٦٥ + {0} = ٨٣٧٤٨',[27283],H(83748,56465))]),
+ Q('L3','أتأكدُ',3,55,I_OPEN,'',[Bx('{0} − ٧٨٠٩٤٢ = ٧٢٩١٣٠٨',[8072250])],{h1:'العددُ المجهولُ هو المطروحُ منه (الكلُّ)، فأجمعُ: ٧٢٩١٣٠٨ + ٧٨٠٩٤٢.',sol:[['☐ = ٧٢٩١٣٠٨ + ٧٨٠٩٤٢','العلاقةُ بينَ الجمعِ والطرحِ'],['= ٨٠٧٢٢٥٠','أجمعُ']]}),
+ Q('L3','أتأكدُ',4,55,I_OPEN,'',[Bx('٨٠٠٠٠٠٠ − {0} = ٦٠٠٠٠٠٠',[2000000],H(8000000,6000000))]),
+ Q('L3','أتأكدُ',5,55,I_WOPEN,'يبلغُ وزنُ دبةِ الباندا الصغيرةِ ٢١ كغم، وبعدَ مرورِ ثلاثِ سنواتٍ أصبحَ وزنُها ٢٤٠ كغم. كم كيلوغراماً زادَ وزنُها؟',
+   [CH('أيُّ جملةٍ مفتوحةٍ تمثّلُ المسألةَ؟',opts3('٢١ + ☐ = ٢٤٠',['٢٤٠ + ☐ = ٢١','الوزنُ الجديدُ ٢٤٠ هو الكلُّ، والقديمُ ٢١ جزءٌ منه.'],['☐ − ٢١ = ٢٤٠','لو كانَ كذلكَ لكانَ الوزنُ ٢٦١. الزيادةُ تُضافُ إلى ٢١ لتصبحَ ٢٤٠.'])),Bx('٢١ + {0} = ٢٤٠<span class="lbl">كغم</span>',[219],H(240,21))]),
+ Q('L3','أتحدثُ',null,56,'','ما العمليةُ التي تستعملُها لحلِّ الجملةِ العدديةِ المفتوحةِ: ٧٦٢٠٠٣ − ☐ = ٦٧٣٨٧٦',
+   [CH('',[['الطرحُ: ٧٦٢٠٠٣ − ٦٧٣٨٧٦',null],['الجمعُ: ٧٦٢٠٠٣ + ٦٧٣٨٧٦','المجهولُ هو العددُ المطروحُ، فنطرحُ الناتجَ من العددِ الأولِ.']]),C(762003,673876)]),
+ Q('L3','أحلُّ',6,56,I_OPEN,'',[Bx('٤٠٧٦١ + {0} = ٦٤٦٤٥',[23884],H(64645,40761))]),
+ Q('L3','أحلُّ',7,56,I_OPEN,'',[Bx('{0} − ٢٠٧١٥٢ = ٣٩٢٨٤٨',[600000])],{h1:'المجهولُ هو المطروحُ منه، فأجمعُ: ٣٩٢٨٤٨ + ٢٠٧١٥٢.',sol:[['☐ = ٣٩٢٨٤٨ + ٢٠٧١٥٢','العلاقةُ بينَ الجمعِ والطرحِ'],['= ٦٠٠٠٠٠','أجمعُ']]}),
+ Q('L3','أحلُّ',8,56,I_OPEN,'',[Bx('{0} + ١٣٨٠٦٩ = ٧٧٨٦٣١',[640562],H(778631,138069))]),
+ Q('L3','أحلُّ',9,56,I_OPEN,'',[Bx('٤٠٢٠٥٠١ + {0} = ٧٠٠٠٠٠٠',[2979499],H(7000000,4020501))]),
+ Q('L3','أحلُّ',10,56,I_OPEN,'',[Bx('{0} − ٢٠٩٣٠٠٤ = ٩٣٨٠٢٦',[3031030])],{h1:'المجهولُ هو المطروحُ منه، فأجمعُ: ٩٣٨٠٢٦ + ٢٠٩٣٠٠٤.',sol:[['☐ = ٩٣٨٠٢٦ + ٢٠٩٣٠٠٤','العلاقةُ بينَ الجمعِ والطرحِ'],['= ٣٠٣١٠٣٠','أجمعُ']]}),
+ Q('L3','أحلُّ',11,56,I_OPEN,'',[Bx('٩٠٠٠٠٠٠ − {0} = ٥٠٠٠٠٠٠',[4000000],H(9000000,5000000))]),
+ Q('L3','أحلُّ',12,56,I_WOPEN,'تحتوي بحيرةٌ على ٨٠٠٠٠٠٠ لترٍ من الماءِ، وبسببِ انخفاضِ درجاتِ الحرارةِ في فصلِ الشتاءِ تجمدتْ كميةٌ من الماءِ مقدارُها ٣٢٩٠٥٦٠ لتراً وتحولتْ إلى جليدٍ. ما كميةُ الماءِ غيرِ المتجمدِ في البحيرةِ؟',
+   [CH('أيُّ جملةٍ مفتوحةٍ تمثّلُ المسألةَ؟',opts3('٣٢٩٠٥٦٠ + ☐ = ٨٠٠٠٠٠٠',['٨٠٠٠٠٠٠ + ☐ = ٣٢٩٠٥٦٠','ماءُ البحيرةِ كلُّه ٨٠٠٠٠٠٠، وهو الكلُّ.'],['☐ − ٨٠٠٠٠٠٠ = ٣٢٩٠٥٦٠','الماءُ غيرُ المتجمدِ جزءٌ من ٨٠٠٠٠٠٠، فهو أصغرُ منه.'])),Bx('٣٢٩٠٥٦٠ + {0} = ٨٠٠٠٠٠٠<span class="lbl">لتراً</span>',[4709440],H(8000000,3290560))]),
+ Q('L3','أحلُّ',13,56,I_WOPEN,'تحتوي مزرعةٌ لتربيةِ الدواجنِ على ٥٥٠٠٠٠ دجاجةٍ، بيعَ منها ٣٦٥٢٣٠ دجاجةً. ما عددُ الدجاجِ المتبقي في المزرعةِ؟',
+   [CH('أيُّ جملةٍ مفتوحةٍ تمثّلُ المسألةَ؟',opts3('٣٦٥٢٣٠ + ☐ = ٥٥٠٠٠٠',['٥٥٠٠٠٠ + ☐ = ٣٦٥٢٣٠','الدجاجُ كلُّه ٥٥٠٠٠٠، وهو الكلُّ.'],['☐ − ٥٥٠٠٠٠ = ٣٦٥٢٣٠','المتبقي جزءٌ من ٥٥٠٠٠٠ فهو أصغرُ منه.'])),Bx('٣٦٥٢٣٠ + {0} = ٥٥٠٠٠٠<span class="lbl">دجاجةً</span>',[184770],H(550000,365230))]),
+ Q('L3','أفكرُ',14,56,'<b class="red">تحدٍّ:</b> أملأُ الجدولَ ليكونَ المجموعُ أفقياً وعمودياً ١٨٠٠٠٠.','',[{type:'grid3',cells:['٩٠٠٠٠','{0}','٧٠٠٠٠','{1}','٧٠٠٠٠','{2}','٤٠٠٠٠','{3}','٥٠٠٠٠'],ans:[20000,50000,60000,90000]}],
+   {h1:'ابدأْ بصفٍّ فيه مربعٌ واحدٌ فقط: ٩٠٠٠٠ + ☐ + ٧٠٠٠٠ = ١٨٠٠٠٠.',h2:'كلُّ مربعٍ = ١٨٠٠٠٠ − مجموعِ العددينِ الآخرينِ في صفِّه أو عمودِه.',sol:[['الصفُّ الأولُ: ١٨٠٠٠٠ − ٩٠٠٠٠ − ٧٠٠٠٠ = ٢٠٠٠٠',''],['الصفُّ الأخيرُ: ١٨٠٠٠٠ − ٤٠٠٠٠ − ٥٠٠٠٠ = ٩٠٠٠٠',''],['العمودُ الأيمنُ: ١٨٠٠٠٠ − ٩٠٠٠٠ − ٤٠٠٠٠ = ٥٠٠٠٠',''],['العمودُ الأيسرُ: ١٨٠٠٠٠ − ٧٠٠٠٠ − ٥٠٠٠٠ = ٦٠٠٠٠','']]}),
+ Q('L3','أفكرُ',15,56,'<b class="red">مسألةٌ مفتوحةٌ:</b> أكتبُ مسألةً حياتيةً للجملةِ المفتوحةِ الآتيةِ:','٨٠٠٠ − ☐ = ٥٠٠٠',[Bx('٨٠٠٠ − {0} = ٥٠٠٠',[3000],H(8000,5000)),W()]),
+ Q('L3','أكتبُ',null,56,'','مسألةٌ حياتيةٌ تمثّلُ جملةً عدديةً مفتوحةً.',[W()],{h1:'مثالٌ لفكرةٍ: «في الصفِّ ٣٥ طالباً، حضرَ منهم ☐ وغابَ ٤».'}),
+ /* lesson 4 p.58 */
+ ...[[1,'ناقلةُ نفطٍ توقفتْ في الميناءِ (أ) وأفرغتْ من حمولتِها ١٢٧٤٠٠ برميلٍ ثم أبحرتْ وتوقفتْ عندَ الميناءِ (ب) وأفرغتْ ١٣٤٥٠٠ برميلاً من حمولتِها وبقيَ في خزاناتِ الناقلةِ ٨٧٣٠٠ برميلٍ. ما حمولةُ الناقلةِ من النفطِ في البدايةِ؟',87300,134500,127400,'قبلَ الميناءِ (ب)','برميلاً'],
+    [2,'استعارَ طلبةٌ من مكتبةِ جامعةِ بغدادَ ٣٤٧٨٠ كتاباً علمياً و ٤٦٦٢٠ كتاباً أدبياً، وبقيَ في المكتبةِ ١٤٥٢٠٠ كتابٍ من الكتبِ العلميةِ والأدبيةِ. ما عددُ الكتبِ العلميةِ والأدبيةِ مجتمعةً في المكتبةِ قبلَ الاستعارةِ؟',145200,46620,34780,'قبلَ استعارةِ الكتبِ الأدبيةِ','كتاباً'],
+    [3,'من إحدى مزارعِ الرُّمّانِ سُوّقَ ٤٥٧٢٠ كغم في يومِ الخميسِ و ٥٣٣٨٠ كغم في يومِ الجمعةِ وبقيَ ٣١٦٣٠ كغم من الرُّمّانِ في المزرعةِ. ما عددُ كيلوغراماتِ الرُّمّانِ في المزرعةِ قبلَ بدءِ التسويقِ؟',31630,53380,45720,'قبلَ يومِ الجمعةِ','كغم'],
+    [4,'قامتْ أمانةُ بغدادَ بتشجيرِ الساحاتِ الوسطيةِ في شوارعِ بغدادَ فزرعتْ ٦٧٤٥٠ شجرةً في شهرٍ و ٥٠٦٧٠ شجرةً في شهرٍ آخرَ وبقيَ ٢٠٠٠ شجرةٍ يجبُ زراعتُها. ما عددُ الأشجارِ التي أرادتْ أمانةُ بغدادَ زراعتَها؟',2000,50670,67450,'قبلَ الشهرِ الآخرِ','شجرةً']]
+   .map(([n,t,end,s2,s1,mid,unit])=>Q('L4','مسائلُ',n,58,I_REV,t,[Bx(`<span class="lbl">${mid}:</span>${ar(end)} + ${ar(s2)} = {0}<br><span class="lbl">في البدايةِ:</span>{1} + ${ar(s1)} = {2}<span class="lbl">${unit}</span>`,null,
+     {fill:[end+s2,end+s2,end+s2+s1],check:v=>v[2]===end+s2+s1&&v[0]===end+s2&&v[1]===end+s2})],
+     {h1:`أبدأُ من النهايةِ: بقيَ ${ar(end)}. ما أُخِذَ أخيراً أعيدُه أولاً بالجمعِ.`,sol:[[`${ar(end)} + ${ar(s2)} = ${ar(end+s2)}`,'أعكسُ الخطوةَ الأخيرةَ'],[`${ar(end+s2)} + ${ar(s1)} = ${ar(end+s2+s1)}`,'أعكسُ الخطوةَ الأولى'],[`أتحقّقُ: ${ar(end+s2+s1)} − ${ar(s1)} − ${ar(s2)} = ${ar(end)} ✓`,null]]})),
+ /* chapter review pp.59–60 */
+ Q('rev','الدرس ١ · مثال ١',1,59,'أجدُ ناتجَ الطرحِ باستعمالِ جدولِ القيمةِ المكانيةِ:','',[T(64042,42643,5)]),
+ Q('rev','الدرس ١ · مثال ١',2,59,'أجدُ ناتجَ الطرحِ باستعمالِ الطرحِ العموديِّ:','',[C(8716523,5296016)]),
+ Q('rev','الدرس ١ · تدريب ١',1,59,'أجدُ ناتجَ الطرحِ باستعمالِ جدولِ القيمةِ المكانيةِ:','',[T(735921,308645,6)]),
+ Q('rev','الدرس ١ · تدريب ١',2,59,'أجدُ ناتجَ الطرحِ باستعمالِ الطرحِ العموديِّ:','',[C(47237501,19614280)]),
+ Q('rev','الدرس ١ · مثال ٢',3,59,'أجدُ ناتجَ الطرحِ باستعمالِ جدولِ القيمةِ المكانيةِ:','',[T(50000,22512,5)]),
+ Q('rev','الدرس ١ · مثال ٢',4,59,'أجدُ ناتجَ الطرحِ باستعمالِ الطرحِ العموديِّ:','',[C(6900000,5847023)]),
+ Q('rev','الدرس ١ · تدريب ٢',3,59,'أجدُ ناتجَ الطرحِ باستعمالِ جدولِ القيمةِ المكانيةِ:','',[T(700000,447532,6)]),
+ Q('rev','الدرس ١ · تدريب ٢',4,59,'أجدُ ناتجَ الطرحِ باستعمالِ الطرحِ العموديِّ:','',[C(9000000,6442266)]),
+ Q('rev','الدرس ٢ · مثال',null,60,I_E1000,'٨٢٤٠١٥ − ٤٦٥٧٣٠',[Bx('{0} − {1} = {2}',[824000,466000,358000])],EST(824015,465730,1000)),
+ Q('rev','الدرس ٢ · تدريب',1,60,I_E1000,'',[Bx('٦٢٨٤٢ − ٣٩٣٧١ ≈ {0}',[24000])],EST(62842,39371,1000)),
+ Q('rev','الدرس ٢ · تدريب',2,60,I_E1000,'',[Bx('٧٧٠٥٣٥ − ٥٧١١٣١ ≈ {0}',[200000])],EST(770535,571131,1000)),
+ Q('rev','الدرس ٣ · مثال',1,60,I_OPEN,'',[Bx('٤١٧٥٢ + {0} = ٧٦٣٨٠',[34628],H(76380,41752))]),
+ Q('rev','الدرس ٣ · مثال',2,60,I_OPEN,'',[Bx('٨٠٠٠٠٠ − {0} = ٢٦٢٥٧٩',[537421],H(800000,262579))]),
+ Q('rev','الدرس ٣ · تدريب',1,60,I_OPEN,'',[Bx('٦٤٨٠٤ + {0} = ٩١١٢١',[26317],H(91121,64804))]),
+ Q('rev','الدرس ٣ · تدريب',2,60,I_OPEN,'',[Bx('٥٠٠٠٠٠ − {0} = ٣٩٨٢٦٧',[101733],H(500000,398267))]),
+ /* chapter test p.61 */
+ Q('test','اختبارُ الفصلِ',1,61,I_PV2,'',[T(77024,35247,5)]), Q('test','اختبارُ الفصلِ',2,61,I_PV2,'',[T(751140,528014,6)]), Q('test','اختبارُ الفصلِ',3,61,I_PV2,'',[T(6302000,1758061,7)]),
+ ...[[4,57541,37702],[5,715144,331166],[6,9534621,7706833],[7,40000,15061],[8,905006,665318],[9,7000600,3440622]].map(([n,a,b])=>Q('test','اختبارُ الفصلِ',n,61,'أستعملُ الطرحَ العموديَّ وأجدُ الناتجَ:','',[C(a,b)])),
+ ...[[10,46330,13771],[11,72526,38270],[12,65263,28604],[13,912715,644625]].map(([n,a,b])=>Q('test','اختبارُ الفصلِ',n,61,I_TEST_E,`${ar(a)} − ${ar(b)}`,[Bx('{0} − {1} = {2}',[Math.round(a/1000)*1000,Math.round(b/1000)*1000,Math.round(a/1000)*1000-Math.round(b/1000)*1000])],EST(a,b,1000))),
+ ...[[14,7408112,499202],[15,700000,126345],[16,4000000,1012366]].map(([n,a,b])=>Q('test','اختبارُ الفصلِ',n,61,'أستعملُ الطرحَ العموديَّ وأجدُ الناتجَ:','',[C(a,b)])),
+ Q('test','اختبارُ الفصلِ',17,61,'أحلُّ الجملَ العدديةَ المفتوحةَ بإيجادِ العددِ المفقودِ في ☐:','',[Bx('٤٧٣١٢ + {0} = ٧٥٤٠٧',[28095],H(75407,47312))]),
+ Q('test','اختبارُ الفصلِ',18,61,'أحلُّ الجملَ العدديةَ المفتوحةَ بإيجادِ العددِ المفقودِ في ☐:','',[Bx('٩٠٠٠٠٠ − {0} = ٥٠٦٢٣٧',[393763],H(900000,506237))])
 ];
-QS.forEach(q=>{
-  const s=q.sub||(q.a!==undefined?[q.a,q.b]:null);
-  if(s){q.plan=subPlan(s[0],s[1],q.n);q.mis=subMistakes(s[0],s[1]);}
-  if(q.kind==='pv')q.exp=q.plan.res.map((d,i)=>i<=q.plan.top?String(d):'');
-  else if(q.kind==='vertchk')q.exp=[String(q.a-q.b),String(q.a-q.b)];
-  else if(['vert','word','palm'].includes(q.kind))q.exp=[String(q.a-q.b)];
-  else if(q.ans)q.exp=q.ans.map(String);
-});
 
-let qi=0, results=[], gains=[], q=null, vals=[], act=0, hintsUsed=0, tries=0, solved=false, xp=860, played=false;
+/* ---------- Exercise engine ---------- */
+let qi=0, results=[], gains=[], q=null, pi=0, hintsUsed=0, tries=0, solved=false, xp=860, played=false;
+let parts=[], act=0;   /* parts[k] = {el, kind, w(col widget), vals, done} */
 const ICON_OK='<svg style="color:var(--ok)"><use href="#i-check"/></svg>', ICON_BAD='<svg style="color:var(--bad)"><use href="#i-x"/></svg>';
-const BX=(k,w)=>`<button class="bx${w?' w':''}" data-i="${k}" aria-label="مربع الإجابة"></button>`;
-const nBoxes=()=>$$('#qcard .bx').length;
-const maxLen=()=>q.kind==='pv'||q.kind==='chal'?1:9;
+const BX=(p,k,w)=>`<button class="bx${w?' w':''}" data-p="${p}" data-i="${k}" aria-label="مربع الإجابة"></button>`;
+const PALM=`<table class="palm"><caption>عددُ أشجارِ النخيلِ في المحافظاتِ</caption><tr><th>المحافظة</th><th>عدد النخيل</th></tr><tr><td>النجف</td><td class="n">٤٣٩٩٢٠٠</td></tr><tr><td>السماوة</td><td class="n">١٢٠٠٣٠٠</td></tr><tr><td>البصرة</td><td class="n">١٠٤٧٥٠٠٠</td></tr></table>`;
+const unitName=k=>UNITS.find(u=>u.k===k).n;
+const norm=s=>String(s??'').replace(/^0+(?=\d)/,'');
 
-function mathHTML(){
-  const k=q.kind;
-  if(k==='pv')return `<div class="sheet">${pvHTML({n:q.n,A:q.plan.A,B:q.plan.B,a:q.a,b:q.b,quiz:true})}</div>`;
-  if(k==='vert'||k==='vertchk'){
-    const main=vertHTML([dg(q.a),dg(q.b),'rule',{span:BX(0,1)}],'−');
-    const chk=k==='vertchk'?`<div class="vcheck"><span class="vlabel">التحقق</span><div class="vbox">${vertHTML([dg(q.b),{span:BX(1,1)},'rule',dg(q.a)],'+')}</div></div>`:'';
-    return `<div class="sheet"><div class="m2" style="justify-content:center;margin:0">${main}${chk}</div></div>`;
-  }
-  if(k==='eq')return `<div class="sheet">${q.text?`<div class="eqline">${q.text}</div>`:''}<div class="eqline">${q.tpl.replace(/\{(\d)\}/g,(_,d)=>BX(+d,1))}</div></div>`;
-  if(k==='word')return `<div class="sheet"><div class="eqline">${BX(0,1)}<span class="lbl">${q.unit}</span></div></div>`;
-  if(k==='palm')return `<div class="sheet"><table class="palm"><caption>عددُ اشجارِ النخيلِ في المحافظاتِ</caption><tr><th>المحافظة</th><th>عدد النخيل</th></tr>
-    <tr><td>النجف</td><td class="n">٤٣٩٩٢٠٠</td></tr><tr><td>السماوة</td><td class="n">١٢٠٠٣٠٠</td></tr><tr><td>البصرة</td><td class="n">١٠٤٧٥٠٠٠</td></tr></table>
-    <div class="eqline">${BX(0,1)}<span class="lbl">نخلة</span></div></div>`;
-  if(k==='chal'){const B=i=>({html:BX(i)});
-    return `<div class="sheet">${vertHTML([[B(5),6,3,B(2),5,B(1),7],[5,2,B(3),7,4,6,B(0)],'rule',[1,B(4),4,0,0,5,3]],'−',7)}</div>`;}
-  if(k==='write')return `<div class="sheet"><textarea class="wbox" id="wtext" placeholder="اكتب مسألتك هنا…"></textarea></div>`;
+function renderSecs(){
+  $('#secs').innerHTML=UNITS.map(u=>{const idx=QS.map((qq,k)=>qq.u===u.k?k:-1).filter(k=>k>=0);const done=idx.filter(k=>results[k]).length;
+    return `<button role="tab" data-jump="${u.k}" aria-selected="${!!q&&q.u===u.k}">${u.n}<span class="c">${ar(done)}/${ar(idx.length)}</span></button>`;}).join('');
+}
+function renderProg(){const idx=QS.map((qq,k)=>qq.u===q.u?k:-1).filter(k=>k>=0);
+  $('#qprog').innerHTML=idx.map(k=>`<i class="${results[k]||(k===qi?'cur':'')}${k>idx[0]&&QS[k-1].sec!==QS[k].sec?' gapb':''}"></i>`).join('');}
+function startPlay(force){if(played&&!force)return;if(force){qi=0;results=[];gains=[];}played=true;renderQ();}
+function jumpUnit(k){const i=QS.findIndex(qq=>qq.u===k);if(i>=0){qi=i;played=true;renderQ();}}
+
+function partHTML(pt,k){
+  if(pt.type==='col')return `<div class="sheet">${pt.palm?PALM:''}<div class="cwhost"></div>${pt.check?'<div class="chkzone" hidden></div>':''}</div>`;
+  if(pt.type==='boxes')return `<div class="sheet"><div class="eqline">${pt.tpl.replace(/\{(\d)\}/g,(_,d)=>BX(k,+d,1))}</div>${pt.help?`<button class="btn ghost helpcalc" data-help="${k}">أحسبُها عمودياً ↵</button><div class="helpzone"></div>`:''}</div>`;
+  if(pt.type==='choice')return `${pt.prompt?`<p class="qtext" style="font-weight:600">${pt.prompt}</p>`:''}<div class="choicelist">${pt.opts.map((o,j)=>`<button class="choice" data-p="${k}" data-o="${j}">${o[0]}</button>`).join('')}</div>`;
+  if(pt.type==='write')return `<div class="sheet"><textarea class="wbox" id="wtext${k}" placeholder="اكتبْ مسألتَك هنا…"></textarea><button class="btn" data-wdone="${k}" style="align-self:flex-start">حفظتُ مسألتي</button></div>`;
+  if(pt.type==='chal'){const B=i=>BX(k,i);const row=a=>a.map(t=>`<span>${typeof t==='number'?ar(t):t}</span>`).join('');
+    return `<div class="sheet"><div class="vert" style="grid-template-columns:repeat(7,auto) auto">${row([B(5),6,3,B(2),5,B(1),7])}<span></span>${row([5,2,B(3),7,4,6,B(0)])}<span class="vo">−</span><div class="rl"></div>${row([1,B(4),4,0,0,5,3])}<span></span></div></div>`;}
+  if(pt.type==='grid3')return `<div class="sheet"><div class="grid3">${pt.cells.map(c=>`<div>${c.replace(/\{(\d)\}/,(_,d)=>BX(k,+d))}</div>`).join('')}</div></div>`;
   return '';
 }
-function renderSecs(){
-  $('#secs').innerHTML=GROUPS.map(g=>{const idx=QS.map((qq,k)=>qq.g===g.k?k:-1).filter(k=>k>=0);const done=idx.filter(k=>results[k]).length;
-    return `<button role="tab" data-jump="${g.k}" aria-selected="${q&&q.g===g.k}">${g.name}<span class="c">${ar(done)}/${ar(idx.length)}</span></button>`;}).join('');
-}
-function renderProg(){$('#qprog').innerHTML=QS.map((qq,k)=>`<i class="${results[k]||(k===qi?'cur':'')}${k>0&&QS[k-1].g!==qq.g?' gapb':''}"></i>`).join('');}
-function startPlay(force){if(played&&!force)return;if(force){qi=0;results=[];gains=[];}played=true;renderQ();}
-function jumpSec(k){const i=QS.findIndex(qq=>qq.g===k);if(i>=0){qi=i;played=true;renderQ();}}
 function renderQ(){
-  q=QS[qi];solved=!!results[qi];hintsUsed=0;tries=0;act=0;q.hintTexts=[];
-  const gname=GROUPS.find(g=>g.k===q.g).name;
+  q=QS[qi];solved=!!results[qi];hintsUsed=0;tries=0;pi=0;act=0;q.hintTexts=[];
+  const needKeys=q.parts.some(p=>['col','boxes','chal','grid3'].includes(p.type));
   const card=$('#qcard');
-  card.innerHTML=`<div class="qmeta"><span class="pill k">${gname}</span><span class="pill">الكتاب · ص ${ar(q.p)}</span>${q.no?`<span class="pill">رقم ${ar(q.no)}</span>`:''}<span class="pill">+${ar(10)} نقاط</span></div>
+  card.innerHTML=`<div class="qmeta"><span class="pill k">${unitName(q.u)}</span>${q.sec?`<span class="pill">${q.sec}</span>`:''}<span class="pill">الكتاب · ص ${ar(q.p)}</span><span class="pill">+${ar(10)} نقاط</span></div>
     ${q.ins?`<p class="qins">${q.ins}</p>`:''}
-    ${q.no||q.text&&q.kind!=='eq'?`<p class="qtext">${q.no?`<span class="qno">${ar(q.no)}</span>`:''}${q.kind!=='eq'&&q.text?q.text:''}</p>`:''}
-    ${q.speak?'<p class="mini" style="margin:0">قُلْ لزميلِكَ أو بصوتٍ عالٍ لماذا تحتاجُ إعادةَ التسميةِ، ثم أكملِ الطرحَ.</p>':''}
-    ${mathHTML()}
-    ${q.kind==='write'?'':`<div class="keypad k4" id="keys">${['١','٢','٣','٤','٥','٦','٧','٨','٩','٠'].map((d,k)=>`<button class="key" data-d="${(k+1)%10}">${d}</button>`).join('')}<button class="key" data-d="b" aria-label="مسح">⌫</button><button class="key wide" data-d="ok" style="grid-column:1/-1">تحقّق</button></div>`}
-    ${q.kind==='write'?'<button class="btn" id="wDone" style="align-self:flex-start">حفظتُ مسألتي</button>':''}
+    ${q.no||q.text?`<p class="qtext">${q.no?`<span class="qno">${ar(q.no)}</span>`:''}${q.text||''}</p>`:''}
+    ${q.parts.map((p,k)=>`<div class="part" data-part="${k}">${partHTML(p,k)}</div>`).join('')}
+    ${coachHTML('qc','')}
+    ${needKeys?`<div class="keypad k4" id="keys">${['١','٢','٣','٤','٥','٦','٧','٨','٩','٠'].map((d,k)=>`<button class="key" data-d="${(k+1)%10}">${d}</button>`).join('')}<button class="key" data-d="b" aria-label="مسح">⌫</button><button class="key wide" data-d="ok" style="grid-column:1/-1">تحقّق</button></div>`:''}
     <div id="fb"></div>
     <div class="qfoot"><button class="btn ghost" id="hintFoot"><svg><use href="#i-bulb"/></svg>تلميح</button><button class="btn" id="nextQ" ${solved?'':'hidden'}>${qi<QS.length-1?'التمرين التالي':'شاهد نتيجتك'}<svg><use href="#i-arrow"/></svg></button></div>`;
   card.classList.remove('enter','leave');void card.offsetWidth;card.classList.add('enter');
-  vals=[...Array(nBoxes())].map(()=>'');
-  if(solved)revealAll();
-  paintBoxes();renderProg();renderSecs();renderHints();
+  parts=q.parts.map((p,k)=>{const el=card.querySelector(`[data-part="${k}"]`);const o={el,pt:p,vals:[...el.querySelectorAll('.bx')].map(()=>''),done:false};
+    if(p.type==='col')o.w=CW(el.querySelector('.cwhost'),{a:p.a,b:p.b,n:p.n,skin:p.skin,mode:'quiz',padB:p.padB});return o;});
+  if(solved){parts.forEach((o,k)=>solvePart(k,true));}
+  activate(solved?parts.length:0);renderProg();renderSecs();renderHints();
 }
-function paintBoxes(){$$('#qcard .bx').forEach(b=>{const i=+b.dataset.i;b.textContent=ar(vals[i]||'');b.classList.toggle('on',i===act&&!solved);});}
-function revealAll(){
-  if(q.fill)vals=q.fill.map(String);else if(q.exp)vals=q.exp.slice();
-  paintBoxes();$$('#qcard .bx').forEach(b=>{b.classList.remove('no');b.classList.add('ok');});
-  if(q.kind==='write'&&$('#wtext'))$('#wtext').value=$('#wtext').value||'';
+function activate(k){
+  pi=k;act=0;
+  parts.forEach((o,j)=>{o.el.style.opacity=j>k&&!solved?'.35':'';o.el.style.pointerEvents=j>k&&!solved?'none':'';});
+  if(k>=parts.length){$('#keys')&&($('#keys').hidden=true);return;}
+  const o=parts[k], p=o.pt;$('#keys')&&($('#keys').hidden=!['col','boxes','chal','grid3'].includes(p.type));
+  let msg='';
+  if(p.type==='col')msg=o.w.prompt();
+  else if(p.type==='boxes')msg=q.est&&!p.help?'قرّبْ كلَّ عددٍ أولاً، ثم اطرحِ العددينِ المقرّبينِ. اضغطْ على أيِّ مربعٍ لتكتبَ فيه.':p.help?`استعملِ العلاقةَ بينَ الجمعِ والطرحِ. وإن أردتَ، اضغطْ «أحسبُها عمودياً» لتطرحَ ${ar(p.help.a)} − ${ar(p.help.b)} وتعيدَ التسميةَ بنفسِك.`:'اكتبْ في المربعاتِ، ثم اضغطْ «تحقّق».';
+  else if(p.type==='choice')msg='اقرأْ جيداً، ثم اخترِ الإجابةَ الصحيحةَ.';
+  else if(p.type==='write')msg='اكتبْ مسألتَك بلغتِك، وفيها أعدادٌ وسؤالٌ.';
+  else if(p.type==='chal')msg='ابدأْ من الآحادِ كما في الطرحِ العاديِّ، واسألْ في كلِّ منزلةٍ: هل حدثتْ إعادةُ تسميةٍ؟';
+  else msg='اكتبْ في المربعاتِ ليكونَ مجموعُ كلِّ صفٍّ وكلِّ عمودٍ ١٨٠٠٠٠.';
+  say($('#qc'),msg);paintBoxes();
 }
-const norm=s=>String(s||'').replace(/^0+(?=\d)/,'');
-function checkNow(){
-  if(solved)return;
-  if(vals.some((v,i)=>v===''&&!(q.exp&&q.exp[i]===''))){feedback(false,'أكملِ المربعاتِ','اكتبْ في كلِّ المربعاتِ قبلَ التحقّقِ.');sfx.bad();return;}
-  let ok, per=null;
-  if(q.check)ok=q.check(vals.map(Number));
-  else{per=q.exp.map((e,i)=>e===''?(vals[i]===''||vals[i]==='0'):norm(vals[i])===e);ok=per.every(Boolean);}
-  $$('#qcard .bx').forEach(b=>{const i=+b.dataset.i;b.classList.remove('ok','no');void b.offsetWidth;b.classList.add(per?(per[i]?'ok':'no'):(ok?'ok':'no'));});
-  if(ok){sfx.ok();feedback(true,tries||hintsUsed?'صحيح، أحسنت المحاولة':'صحيح!',doneMsg());finish(false);}
-  else{tries++;sfx.bad();feedback(false,'ليس بعد',wrongMsg(per));}
+function paintBoxes(){if(!parts[pi])return;$$('#qcard .bx[data-p]').forEach(b=>{const p=+b.dataset.p,i=+b.dataset.i;const o=parts[p];if(!o||!o.vals)return;b.textContent=ar(o.vals[i]||'');b.classList.toggle('on',p===pi&&i===act&&!solved);});}
+function partDone(){
+  const o=parts[pi];o.done=true;
+  if(o.pt.type==='col'&&o.pt.check){const z=o.el.querySelector('.chkzone');z.hidden=false;z.innerHTML=`<div class="vcheck"><span class="vlabel">التحقق</span><div class="vbox">${vertHTML([dg(o.pt.b),dg(o.pt.a-o.pt.b),'rule',dg(o.pt.a)],'+')}</div></div>`;}
+  if(pi+1<parts.length){activate(pi+1);sfx.pop();return;}
+  finish(false);
 }
-function doneMsg(){
-  if(q.plan&&['pv','vert','vertchk','word','palm'].includes(q.kind))return `${ar(q.a)} − ${ar(q.b)} = ${ar(q.a-q.b)}${q.kind==='vertchk'?` والتحقق: ${ar(q.b)} + ${ar(q.a-q.b)} = ${ar(q.a)}`:''}`;
-  return 'أحسنت.';
-}
-function wrongMsg(per){
-  if(q.mis){
-    let entered=null;
-    if(q.kind==='pv')entered=Number(vals.slice().reverse().join('')||0);
-    else if(['vert','vertchk','word','palm'].includes(q.kind))entered=Number(vals[0]);
-    if(entered!==null&&entered===q.mis.small&&q.mis.small!==q.plan.value)return 'طرحتَ الرقمَ الأصغرَ من الأكبرِ في كلِّ منزلةٍ. عندما يكونُ الرقمُ العلويُّ أصغرَ، أعيدُ التسميةَ من المنزلةِ التاليةِ.';
-    if(entered!==null&&entered===q.mis.nodec&&q.mis.nodec!==q.plan.value)return 'أعدتَ التسميةَ، لكن نسيتَ أن تُنقصَ واحداً من المنزلةِ التي أخذتَ منها.';
-    if(q.kind==='pv'&&per){const i=per.findIndex(x=>!x);if(i>=0)return `راجعْ منزلةَ ${PLACE[i].replace(/[َُِ]$/,'')}. ابدأْ من الآحادِ وأعدِ التسميةَ عندما يكونُ الرقمُ العلويُّ أصغرَ.`;}
-    if(q.kind==='vertchk'&&per&&per[0]&&!per[1])return 'الناتجُ صحيحٌ. اكتبْهُ في مربعِ التحققِ أيضاً لترى أنَّ الجمعَ يعيدُكَ إلى العددِ الأولِ.';
-  }
-  return 'ليس بعد. أبدأُ من الآحادِ، وأعيدُ التسميةَ عندما يكونُ الرقمُ العلويُّ أصغرَ.';
-}
-function feedback(ok,title,msg){$('#fb').innerHTML=`<div class="feedback ${ok?'ok':'bad'}">${ok?ICON_OK:ICON_BAD}<div><b>${title}</b><p>${msg}</p></div></div>`;}
-function toast(txt,el){const r=el.getBoundingClientRect(),t=document.createElement('div');t.className='toast';t.textContent=txt;
-  t.style.left=r.left+r.width/2-20+'px';t.style.top=r.top-10+'px';document.body.append(t);setTimeout(()=>t.remove(),1200);}
 function finish(byHelp){
   if(solved)return;solved=true;
   const clean=!byHelp&&tries===0&&hintsUsed===0;results[qi]=clean?'ok':'help';
-  const gain=clean?10:Math.max(4,10-hintsUsed*2-tries*2);gains[qi]=gain;xp+=gain;
-  $('#xpVal').textContent=grp(xp);const nb=$('#nextQ');nb.hidden=false;toast('+'+ar(gain),nb);
-  if(q.g==='c')$('#gaugeQ').textContent=ar(q.a-q.b);
-  paintBoxes();renderProg();renderSecs();renderHints();
+  const gain=clean?10:Math.max(4,10-hintsUsed*2-tries);gains[qi]=gain;xp+=gain;
+  $('#xpVal').textContent=grp(xp);const nb=$('#nextQ');nb.hidden=false;toast('+'+ar(gain),nb);sfx.ok();
+  const last=parts[parts.length-1];
+  const unit=q.parts.find(p=>p.unit)?.unit;const colP=q.parts.find(p=>p.type==='col');
+  say($('#qc'),colP?`أحسنتَ! ${ar(colP.a)} − ${ar(colP.b)} = <b>${ar(colP.a-colP.b)}</b>${unit?' '+unit:''}.`:'أحسنتَ! أكملتَ التمرينَ.','good');
+  if(q.u==='c')$('#gaugeQ').textContent=ar(83520);
+  $('#keys')&&($('#keys').hidden=true);activate(parts.length);renderProg();renderSecs();renderHints();
 }
-$('#qcard').addEventListener('click',e=>{
-  const bx=e.target.closest('.bx'), k=e.target.closest('.key');
-  if(bx&&!solved){act=+bx.dataset.i;sfx.tap();paintBoxes();}
-  if(k&&!solved){const d=k.dataset.d;sfx.tap();
-    if(d==='ok'){checkNow();return;}
-    if(d==='b'){vals[act]=vals[act].slice(0,-1);}
-    else{
-      if(maxLen()===1){vals[act]=d;act=Math.min(act+1,nBoxes()-1);}
-      else if(vals[act].length<maxLen())vals[act]+=d;
-    }
-    $$('#qcard .bx.no').forEach(b=>b.classList.remove('no'));paintBoxes();}
-  if(e.target.closest('#wDone')&&!solved){const t=($('#wtext').value||'').trim();
-    if(t.length<15){feedback(false,'اكتبْ أكثرَ قليلاً','اكتبْ مسألةً كاملةً فيها عددانِ ضمنَ الملايينِ وسؤالٌ.');sfx.bad();}
-    else{sfx.ok();feedback(true,'رائع!','هذه مسألتك. اعرضها على معلّمك أو زميلك ليحلّها.');finish(false);}}
+function solvePart(k,silent){
+  const o=parts[k],p=o.pt;
+  if(p.type==='col'){o.w.solveAll();}
+  else if(p.type==='choice'){const j=p.opts.findIndex(x=>x[1]===null);o.el.querySelector(`[data-o="${j}"]`)?.classList.add('right');}
+  else if(p.type==='write'){}
+  else{const vals=(p.fill||p.ans).map(String);o.vals=vals;o.el.querySelectorAll('.bx').forEach(b=>{b.textContent=ar(vals[+b.dataset.i]);b.classList.add('ok');});}
+  o.done=true;
+}
+function toast(txt,el){const r=el.getBoundingClientRect(),t=document.createElement('div');t.className='toast';t.textContent=txt;t.style.left=r.left+r.width/2-20+'px';t.style.top=r.top-10+'px';document.body.append(t);setTimeout(()=>t.remove(),1200);}
+function feedback(ok,title,msg){$('#fb').innerHTML=msg?`<div class="feedback ${ok?'ok':'bad'}">${ok?ICON_OK:ICON_BAD}<div><b>${title}</b><p>${msg}</p></div></div>`:'';}
+
+const roundWhy=(x,p)=>`${ar(x)} ≈ ${ar(roundTo(x,p))}: ${why(x,p)}`;
+function checkBoxes(){
+  const o=parts[pi],p=o.pt;
+  if(o.vals.some(v=>v==='')){say($('#qc'),'اكتبْ في كلِّ المربعاتِ قبلَ التحقّقِ.','warn');sfx.bad();return;}
+  let ok,per=null;
+  if(p.check)ok=p.check(o.vals.map(Number));
+  else{per=p.ans.map((e,i)=>norm(o.vals[i])===String(e));ok=per.every(Boolean);}
+  o.el.querySelectorAll('.bx').forEach(b=>{const i=+b.dataset.i;b.classList.remove('ok','no');void b.offsetWidth;b.classList.add(per?(per[i]?'ok':'no'):(ok?'ok':'no'));});
+  if(ok){sfx.pop();say($('#qc'),'صحيحٌ!','good');partDone();return;}
+  tries++;sfx.bad();
+  let msg='ليسَ بعدُ. راجعِ المربعاتِ الحمراءَ.';
+  if(q.est&&per&&p.ans.length===3){const {a,b,p:pp}=q.est;
+    if(!per[0])msg=`راجعْ تقريبَ العددِ الأولِ. ${roundWhy(a,pp)}`;else if(!per[1])msg=`راجعْ تقريبَ العددِ الثاني. ${roundWhy(b,pp)}`;
+    else msg=`التقريبُ صحيحٌ. الآن اطرحْ: ${ar(roundTo(a,pp))} − ${ar(roundTo(b,pp))}.`;}
+  else if(p.help)msg=`تذكّرْ العلاقةَ بينَ الجمعِ والطرحِ: المجهولُ = ${ar(p.help.a)} − ${ar(p.help.b)}. جرّبْ «أحسبُها عمودياً».`;
+  say($('#qc'),msg,'warn');
+}
+$('#qcard').addEventListener('click',async e=>{
+  if(solved){if(e.target.closest('#nextQ'))nextQ();return;}
+  const bx=e.target.closest('.bx[data-p]'), k=e.target.closest('.key'), ch=e.target.closest('.choice[data-p]'), hp=e.target.closest('[data-help]'), wd=e.target.closest('[data-wdone]');
+  if(bx&&+bx.dataset.p===pi&&parts[pi].pt.type!=='col'){act=+bx.dataset.i;sfx.tap();paintBoxes();}
+  if(e.target.closest('[data-act="regroup"]')&&parts[pi]?.pt.type==='col'){const r=await parts[pi].w.regroupClick();if(r){if(r.tone==='warn')tries++;say($('#qc'),r.text,r.tone);}}
+  if(k){const d=k.dataset.d, o=parts[pi];if(!o)return;sfx.tap();
+    if(o.pt.type==='col'){if(d==='ok'||d==='b')return;const r=o.w.key(d);if(r){say($('#qc'),r.text,r.tone);if(r.tone==='warn')tries++;if(r.done)partDone();}return;}
+    if(d==='ok'){checkBoxes();return;}
+    if(d==='b')o.vals[act]=o.vals[act].slice(0,-1);
+    else if(o.pt.type==='chal'){o.vals[act]=d;act=Math.min(act+1,o.vals.length-1);}
+    else if(o.vals[act].length<9)o.vals[act]+=d;
+    o.el.querySelectorAll('.bx.no').forEach(b=>b.classList.remove('no'));paintBoxes();}
+  if(ch&&+ch.dataset.p===pi){const o=parts[pi],opt=o.pt.opts[+ch.dataset.o];
+    if(opt[1]===null){ch.classList.add('right');sfx.pop();say($('#qc'),'صحيحٌ!','good');partDone();}
+    else{tries++;sfx.bad();ch.classList.remove('wrong');void ch.offsetWidth;ch.classList.add('wrong');say($('#qc'),opt[1],'warn');}}
+  if(hp&&+hp.dataset.help===pi)openHelper();
+  if(wd&&+wd.dataset.wdone===pi){const t=($('#wtext'+pi).value||'').trim();
+    if(t.length<15){say($('#qc'),'اكتبْ أكثرَ قليلاً: مسألةً كاملةً فيها أعدادٌ وسؤالٌ.','warn');sfx.bad();}
+    else{say($('#qc'),'رائعٌ! اعرضْ مسألتَك على معلّمِك أو زميلِك ليحلَّها.','good');partDone();}}
   if(e.target.closest('#nextQ'))nextQ();
   if(e.target.closest('#hintFoot'))openHint();
 });
-$('#secs').addEventListener('click',e=>{const b=e.target.closest('[data-jump]');if(b){sfx.tap();jumpSec(b.dataset.jump);}});
-addEventListener('keydown',e=>{if(cur!=='play'||!q||solved||q.kind==='write')return;
-  const AD='٠١٢٣٤٥٦٧٨٩';let d=/^[0-9]$/.test(e.key)?e.key:AD.indexOf(e.key)>=0?String(AD.indexOf(e.key)):{Backspace:'b',Enter:'ok'}[e.key];
-  if(e.key==='ArrowLeft'||e.key==='ArrowRight'){act=Math.max(0,Math.min(nBoxes()-1,act+(e.key==='ArrowLeft'?1:-1)));paintBoxes();return;}
+function openHelper(){
+  const o=parts[pi],p=o.pt;if(o.helper)return;const z=o.el.querySelector('.helpzone');
+  o.helper=CW(z,{a:p.help.a,b:p.help.b,skin:'vert',mode:'quiz'});z.insertAdjacentHTML('afterbegin','<p class="mini" style="margin:6px 0">مسودةٌ: أطرحُ وأعيدُ التسميةَ، والناتجُ يذهبُ إلى المربعِ.</p>');
+  say($('#qc'),o.helper.prompt());o.el.querySelector('.helpcalc').hidden=true;
+  z.addEventListener('click',async e=>{if(e.target.closest('[data-act="regroup"]')){const r=await o.helper.regroupClick();if(r){if(r.tone==='warn')tries++;say($('#qc'),r.text,r.tone);}}});
+  o.helperKey=d=>{const r=o.helper.key(d);if(r){say($('#qc'),r.text,r.tone);if(r.tone==='warn')tries++;if(r.done){o.vals[0]=String(p.help.a-p.help.b);paintBoxes();say($('#qc'),`الناتجُ ${ar(p.help.a-p.help.b)} وُضعَ في المربعِ. اضغطْ «تحقّق».`,'good');o.helperOff=true;}}};
+}
+/* route keys to the helper while it is open */
+$('#qcard').addEventListener('click',e=>{const k=e.target.closest('.key');if(!k||solved)return;const o=parts[pi];if(o&&o.helper&&!o.helperOff&&/^\d$/.test(k.dataset.d)){e.stopPropagation();sfx.tap();o.helperKey(k.dataset.d);}},true);
+$('#secs').addEventListener('click',e=>{const b=e.target.closest('[data-jump]');if(b){sfx.tap();jumpUnit(b.dataset.jump);}});
+addEventListener('keydown',e=>{if(cur!=='play'||!q||solved||!$('#keys')||$('#keys').hidden)return;
+  const AD='٠١٢٣٤٥٦٧٨٩';const d=/^[0-9]$/.test(e.key)?e.key:AD.indexOf(e.key)>=0?String(AD.indexOf(e.key)):{Backspace:'b',Enter:'ok'}[e.key];
   const b=d&&$(`#keys .key[data-d="${d}"]`);if(b){e.preventDefault();b.click();}});
 function nextQ(){const card=$('#qcard');card.classList.remove('enter');card.classList.add('leave');sfx.whoosh();
   setTimeout(()=>{qi++;if(qi>=QS.length)go('result');else renderQ();},reduced?20:420);}
 
-/* ---------- Hint ladder ---------- */
-const RUNGS=[['فكرة تساعدك','−٢'],['أرِني إعادةَ التسميةِ','−٢'],['اشرح لي الحل خطوة خطوة','−٤']];
+/* ---------- Hints ---------- */
+const RUNGS=[['فكرةٌ تساعدُك','−٢'],['أرِني','−٢'],['اشرحْ لي الحلَّ خطوةً خطوةً','−٤']];
 function solLines(){
   if(q.sol)return q.sol;
-  const P=q.plan, L=[[`${ar(P.A.slice().reverse().join('').replace(/^0+/,''))} − ${ar(P.B.slice().reverse().join('').replace(/^0+/,''))}`,'']];
-  P.steps.forEach(s=>L.push([s.line,null]));
-  L.push([`= ${ar(P.value)}`,'الناتج']);
-  if(q.kind==='vertchk')L.push([`التحقق: ${ar(q.b)} + ${ar(P.value)} = ${ar(q.a)}`,null]);
-  return L.concat(q.post||[]);
+  const L=[];
+  if(q.est){const {a,b,p}=q.est;L.push([roundWhy(a,p),''],[roundWhy(b,p),''],[`${ar(roundTo(a,p))} − ${ar(roundTo(b,p))} = ${ar(roundTo(a,p)-roundTo(b,p))}`,'التقديرُ']);}
+  q.parts.forEach(p=>{const s=p.type==='col'?[p.a,p.b]:p.help?[p.help.a,p.help.b]:null;if(!s||q.est)return;
+    const P=subPlan(s[0],s[1]);if(p.help)L.push([`☐ = ${ar(s[0])} − ${ar(s[1])}`,'العلاقةُ بينَ الجمعِ والطرحِ']);
+    P.steps.slice(0,P.top+1).forEach(st=>L.push([st.line,null]));L.push([`= ${ar(P.value)}`,'الناتجُ']);});
+  return L.length?L:[['راجعِ الخطواتِ مع معلّمِك.',null]];
 }
 function hintText(k){
+  const p=parts[pi]?.pt;
   if(k===0){if(q.h1)return q.h1;
-    if(['word','palm'].includes(q.kind))return `أطرحُ العددَ الأصغرَ من الأكبرِ: ${ar(q.a)} − ${ar(q.b)}`;
-    const s=q.plan&&q.plan.steps.findIndex(x=>x.ev.length);
-    return s>=0?`أبدأُ من الآحادِ. في ${PLACE[s]} الرقمُ العلويُّ أصغرُ، فأعيدُ التسميةَ من المنزلةِ التاليةِ.`:'أبدأُ من الآحادِ وأطرحُ كلَّ منزلةٍ.';}
+    if(q.est)return 'أقرّبُ كلَّ عددٍ أولاً: أنظرُ إلى الرقمِ الذي على يمينِ مرتبةِ التقريبِ مباشرةً، ٥ أو أكثرُ يعني أضيفُ ١.';
+    if(p?.type==='col')return 'أبدأُ من الآحادِ. وفي كلِّ منزلةٍ أسألُ: هل الرقمُ العلويُّ أصغرُ من السفليِّ؟ إن كانَ أصغرَ أعيدُ التسميةَ أولاً.';
+    if(p?.help)return `أستعملُ العلاقةَ بينَ الجمعِ والطرحِ: ☐ = ${ar(p.help.a)} − ${ar(p.help.b)}`;
+    return 'اقرأِ السؤالَ مرةً أخرى بهدوءٍ.';}
   if(q.h2)return q.h2;
-  if(q.kind==='pv')return 'ظهرتْ إعادةُ التسميةِ فوقَ الأرقامِ في الجدولِ، بألوانِ المنازلِ.';
-  if(q.plan){const r=q.plan.steps.filter(x=>x.ev.length).map(x=>x.line);return r.length?r.join('<br>'):'لا تحتاجُ هذه المسألةُ إعادةَ تسميةٍ.';}
-  return 'راجعِ الخطواتِ بهدوءٍ.';
+  if(q.est){const {a,b,p:pp}=q.est;return roundWhy(a,pp)+'<br>'+roundWhy(b,pp);}
+  if(p?.type==='col')return 'ظهرتْ كلُّ إعادةِ تسميةٍ فوقَ الأرقامِ. الآن اطرحْ كلَّ منزلةٍ واكتبِ الناتجَ.';
+  if(p?.help)return 'فتحتُ لك المسودةَ: اطرحْ عمودياً وأعدِ التسميةَ.';
+  return 'راجعْ كلَّ خطوةٍ.';
 }
 function renderHints(){
-  $('#hintbox').innerHTML=`<h3>محتار؟ التلميحات بالترتيب</h3><p class="mini" style="margin:0">كل تلميح يقلّل نقاط التمرين قليلاً، ولا يُفشلك أبداً.</p>
-   ${RUNGS.map((r,k)=>{const open=k<hintsUsed, can=k===hintsUsed&&!solved&&!(q.kind==='write'&&k>0);
+  $('#hintbox').innerHTML=`<h3>محتار؟ التلميحاتُ بالترتيبِ</h3><p class="mini" style="margin:0">كلُّ تلميحٍ يقلّلُ نقاطَ التمرينِ قليلاً، ولا يُفشلُك أبداً.</p>
+   ${RUNGS.map((r,k)=>{const open=k<hintsUsed, can=k===hintsUsed&&!solved;
      return `<button class="rung ${open?'open':''}" ${can?'':'disabled'}><span class="ri">${ar(k+1)}</span><span><span class="rt">${r[0]}</span>${open&&k<2?`<span class="rb">${q.hintTexts[k]||''}</span>`:''}</span><span class="cost">${open?'':r[1]}</span></button>`;}).join('')}
    <div class="board worked" id="board" ${hintsUsed>=3?'':'hidden'}></div>`;
   if(hintsUsed>=3)$('#board').innerHTML=staticLines(solLines());
 }
 $('#hintbox').addEventListener('click',e=>{const r=e.target.closest('.rung');if(r&&!r.disabled)openHint();});
 async function openHint(){
-  if(solved||hintsUsed>=3||(q.kind==='write'&&hintsUsed>=1))return;
-  const k=hintsUsed;if(k<2)q.hintTexts[k]=hintText(k);hintsUsed++;sfx.pop();
-  if(k===1&&q.kind==='pv'){const t=$('#qcard table.pv');for(const st of q.plan.steps)for(const ev of st.ev){pvMark(t,ev);await wait(120);}}
+  if(solved||hintsUsed>=3)return;const k=hintsUsed;const p=parts[pi]?.pt;
+  if(k<2)q.hintTexts[k]=hintText(k);hintsUsed++;sfx.pop();
+  if(k===1){if(p?.type==='col')await parts[pi].w.showMarks();if(p?.help)openHelper();}
   if(k<2){renderHints();return;}
   renderHints();const b=$('#board');b.hidden=false;if(innerWidth<900)b.scrollIntoView({behavior:reduced?'auto':'smooth',block:'center'});
-  await writeLines(b,solLines(),560);
-  revealAll();feedback(true,'هكذا يُحل','راجع الخطوات المكتوبة، وفي التمرين القادم جرّب وحدك.');finish(true);
+  await writeLines(b,solLines(),520);
+  parts.forEach((o,j)=>{if(!o.done)solvePart(j);});
+  feedback(true,'هكذا يُحَلُّ','راجعِ الخطواتِ المكتوبةَ، وفي التمرينِ القادمِ جرّبْ وحدَك.');finish(true);
 }
-if(matchMedia('(hover:hover)').matches&&!reduced){const card=$('#qcard');
-  card.addEventListener('pointermove',e=>{if(e.target.closest('.sheet'))return;const r=card.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform=`rotateY(${x*3}deg) rotateX(${-y*2}deg)`;});
-  card.addEventListener('pointerleave',()=>card.style.transform='');}
 
-/* ---------- Result by the book's sections ---------- */
+/* ---------- Result ---------- */
 function showResult(){
   const sample=results.filter(Boolean).length<QS.length;
-  const R=sample?QS.map((_,k)=>[3,9,15,27].includes(k)?'help':'ok'):results;
+  const R=sample?QS.map((_,k)=>k%9===4?'help':'ok'):results;
   const clean=R.filter(r=>r==='ok').length, ratio=clean/QS.length, stars=ratio>=.85?3:ratio>=.5?2:1;
   const earned=sample?R.reduce((a,r)=>a+(r==='ok'?10:6),0):gains.reduce((a,g)=>a+(g||0),0);
-  $('#rTitle').textContent=sample?'هكذا تبدو النتيجة (مثال)':stars===3?'أتقنت طرح الأعداد ضمن الملايين':'أتممت تمارين الدرس';
-  $('#rLine').textContent=sample?'حُلَّ التمارين لترى نتيجتك الحقيقية هنا.':`حللتَ ${ar(clean)} من ${ar(QS.length)} تمريناً وحدك من أول محاولة.`;
+  $('#rTitle').textContent=sample?'هكذا تبدو النتيجةُ (مثال)':stars===3?'أتقنتَ فصلَ الطرحِ':'أتممتَ تمارينَ فصلِ الطرحِ';
+  $('#rLine').textContent=sample?`حُلَّ تمارينَ الفصلِ (${ar(QS.length)} تمريناً) لترى نتيجتَك الحقيقيةَ هنا.`:`حللتَ ${ar(clean)} من ${ar(QS.length)} تمريناً وحدَك من أولِ محاولةٍ.`;
   $$('#stars .s').forEach((s,k)=>{s.classList.remove('on');void s.offsetWidth;if(k<stars){s.style.animationDelay=(.25+k*.22)+'s';s.classList.add('on');}});
   setTimeout(sfx.ok,400);
   const big=$('#xpBig'),t0=performance.now();
   (function tick(t){const p=Math.min(1,(t-t0)/1200),e=1-Math.pow(1-p,3);big.textContent='+'+ar(Math.round(earned*e));if(p<1)requestAnimationFrame(tick);})(t0);
-  const sc=GROUPS.map(g=>{const rs=QS.map((qq,k)=>qq.g===g.k?R[k]:null).filter(x=>x!==null);return Math.round(rs.reduce((a,r)=>a+(r==='ok'?100:r==='help'?60:0),0)/rs.length);});
-  $('#skills').innerHTML=GROUPS.map((g,i)=>`<div class="skill"><span>${g.name}</span><span>${ar(sc[i])}٪</span><div class="track"><i class="${sc[i]<80?'mid':''}"></i></div></div>`).join('');
+  const sc=UNITS.map(u=>{const rs=QS.map((qq,k)=>qq.u===u.k?R[k]:null).filter(x=>x!==null);return Math.round(rs.reduce((a,r)=>a+(r==='ok'?100:r==='help'?60:0),0)/rs.length);});
+  $('#skills').innerHTML=UNITS.map((u,i)=>`<div class="skill"><span>${u.n}</span><span>${ar(sc[i])}٪</span><div class="track"><i class="${sc[i]<80?'mid':''}"></i></div></div>`).join('');
   setTimeout(()=>$$('#skills .track i').forEach((el,i)=>el.style.width=sc[i]+'%'),120);
 }
 
 /* ---------- Boot ---------- */
-buildEx(0);fillTank();
-const h=(location.hash||'').slice(1);if(SCREENS.includes(h)&&h!=='cover')go(h);
+fillTank();
+const h0=(location.hash||'').slice(1);if(SCREENS.includes(h0)&&h0!=='cover')go(h0);
 </script>
 </body></html>
