@@ -556,6 +556,21 @@ table.pv{border-collapse:collapse;margin-inline:auto;background:#fff;transform:r
 .grid3 .bx{width:100%;height:100%;border-radius:0;border:0}
 .helpcalc{align-self:center}
 @media (max-width:760px){.lab,.plan4{grid-template-columns:minmax(0,1fr)}}
+
+/* book reference + numbered index (matches the printed book) */
+.bookref{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--paper);color:var(--paper-ink);border:1.5px solid var(--paper-line);border-radius:14px;padding:8px 12px;font-size:14.5px}
+.bookref svg{width:20px;height:20px;color:#1a9a5b}
+.bookref b{font-family:var(--f-display);font-size:18px}
+.bookref .qref{background:#1a9a5b;color:#fff;border-radius:999px;padding:0 12px}
+.bookref i{width:1px;height:18px;background:var(--paper-line)}
+.bookref .xp{margin-inline-start:auto;font-size:12.5px;color:var(--paper-muted)}
+.qindex{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;padding:10px 12px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+.qig{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.qih{font-size:12.5px;font-weight:700;color:var(--muted);margin-inline-end:2px}
+.qic{min-width:32px;height:32px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg2);font-family:var(--f-display);font-weight:700;font-size:14px;color:var(--fg);padding:0 8px}
+.qic.ok{background:var(--ok);border-color:var(--ok);color:#06281b}
+.qic.help{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.qic.cur{outline:3px solid var(--accent);outline-offset:2px}
 .chip{white-space:nowrap}
 </style>
 
@@ -647,6 +662,7 @@ table.pv{border-collapse:collapse;margin-inline:auto;background:#fff;transform:r
     <h1>تمارينُ فصلِ الطرحِ</h1>
     <p class="lead">تمارين الكتاب نفسها وبترتيبها، من الاختبار القبلي حتى اختبار الفصل. في كل طرحٍ تعيدُ التسميةَ بنفسك منزلةً منزلة، والمعلّم معك خطوةً بخطوة.</p>
     <div class="secs" id="secs" role="tablist" aria-label="أقسام التمارين"></div>
+    <div class="qindex" id="qindex" aria-label="فهرس التمارين بأرقام الكتاب"></div>
     <div class="play-grid">
       <div>
         <div class="qprog" id="qprog"></div>
@@ -1214,6 +1230,13 @@ function renderSecs(){
   $('#secs').innerHTML=UNITS.map(u=>{const idx=QS.map((qq,k)=>qq.u===u.k?k:-1).filter(k=>k>=0);const done=idx.filter(k=>results[k]).length;
     return `<button role="tab" data-jump="${u.k}" aria-selected="${!!q&&q.u===u.k}">${u.n}<span class="c">${ar(done)}/${ar(idx.length)}</span></button>`;}).join('');
 }
+const refLabel=q=>q.no!=null?`السؤال ${ar(q.no)}`:(q.sec||'مسألة الفصل');
+const chipLabel=q=>q.no!=null?ar(q.no):q.u==='c'?'مسألة':(q.sec||'').split('·').pop().trim().replace(/ُ/g,'');
+function renderIndex(){
+  const idx=QS.map((qq,k)=>qq.u===q.u?k:-1).filter(k=>k>=0), groups=[];
+  idx.forEach(k=>{const g=QS[k].sec+'|'+QS[k].p;let G=groups[groups.length-1];if(!G||G.key!==g){G={key:g,sec:QS[k].sec,p:QS[k].p,items:[]};groups.push(G);}G.items.push(k);});
+  $('#qindex').innerHTML=groups.map(G=>`<div class="qig"><span class="qih">${G.sec||'غلاف الفصل'} · ص ${ar(G.p)}</span>${G.items.map(k=>`<button class="qic ${results[k]||''}${k===qi?' cur':''}" data-qk="${k}" aria-label="${refLabel(QS[k])} صفحة ${ar(QS[k].p)}">${chipLabel(QS[k])}</button>`).join('')}</div>`).join('');
+}
 function renderProg(){const idx=QS.map((qq,k)=>qq.u===q.u?k:-1).filter(k=>k>=0);
   $('#qprog').innerHTML=idx.map(k=>`<i class="${results[k]||(k===qi?'cur':'')}${k>idx[0]&&QS[k-1].sec!==QS[k].sec?' gapb':''}"></i>`).join('');}
 function startPlay(force){if(played&&!force)return;if(force){qi=0;results=[];gains=[];}played=true;renderQ();}
@@ -1233,7 +1256,8 @@ function renderQ(){
   q=QS[qi];solved=!!results[qi];hintsUsed=0;tries=0;pi=0;act=0;q.hintTexts=[];
   const needKeys=q.parts.some(p=>['col','boxes','chal','grid3'].includes(p.type));
   const card=$('#qcard');
-  card.innerHTML=`<div class="qmeta"><span class="pill k">${unitName(q.u)}</span>${q.sec?`<span class="pill">${q.sec}</span>`:''}<span class="pill">الكتاب · ص ${ar(q.p)}</span><span class="pill">+${ar(10)} نقاط</span></div>
+  card.innerHTML=`<div class="bookref"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M3 5.5C5.5 4 8.5 4 12 6c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z M12 6v13.5"/></svg>
+      <span>الكتاب</span><b>ص ${ar(q.p)}</b><i></i><span>${q.u==='c'?'غلاف الفصل':unitName(q.u)}${q.sec&&q.sec!==unitName(q.u)&&q.no!=null?' · '+q.sec:''}</span><i></i><b class="qref">${refLabel(q)}</b><span class="xp">+${ar(10)}</span></div>
     ${q.ins?`<p class="qins">${q.ins}</p>`:''}
     ${q.no||q.text?`<p class="qtext">${q.no?`<span class="qno">${ar(q.no)}</span>`:''}${q.text||''}</p>`:''}
     ${q.parts.map((p,k)=>`<div class="part" data-part="${k}">${partHTML(p,k)}</div>`).join('')}
@@ -1245,7 +1269,7 @@ function renderQ(){
   parts=q.parts.map((p,k)=>{const el=card.querySelector(`[data-part="${k}"]`);const o={el,pt:p,vals:[...el.querySelectorAll('.bx')].map(()=>''),done:false};
     if(p.type==='col')o.w=CW(el.querySelector('.cwhost'),{a:p.a,b:p.b,n:p.n,skin:p.skin,mode:'quiz',padB:p.padB});return o;});
   if(solved){parts.forEach((o,k)=>solvePart(k,true));}
-  activate(solved?parts.length:0);renderProg();renderSecs();renderHints();
+  activate(solved?parts.length:0);renderProg();renderSecs();renderIndex();renderHints();
 }
 function activate(k){
   pi=k;act=0;
@@ -1277,7 +1301,7 @@ function finish(byHelp){
   const unit=q.parts.find(p=>p.unit)?.unit;const colP=q.parts.find(p=>p.type==='col');
   say($('#qc'),colP?`أحسنتَ! ${ar(colP.a)} − ${ar(colP.b)} = <b>${ar(colP.a-colP.b)}</b>${unit?' '+unit:''}.`:'أحسنتَ! أكملتَ التمرينَ.','good');
   if(q.u==='c')$('#gaugeQ').textContent=ar(83520);
-  $('#keys')&&($('#keys').hidden=true);activate(parts.length);renderProg();renderSecs();renderHints();
+  $('#keys')&&($('#keys').hidden=true);activate(parts.length);renderProg();renderSecs();renderIndex();renderHints();
 }
 function solvePart(k,silent){
   const o=parts[k],p=o.pt;
@@ -1339,6 +1363,7 @@ function openHelper(){
 /* route keys to the helper while it is open */
 $('#qcard').addEventListener('click',e=>{const k=e.target.closest('.key');if(!k||solved)return;const o=parts[pi];if(o&&o.helper&&!o.helperOff&&/^\d$/.test(k.dataset.d)){e.stopPropagation();sfx.tap();o.helperKey(k.dataset.d);}},true);
 $('#secs').addEventListener('click',e=>{const b=e.target.closest('[data-jump]');if(b){sfx.tap();jumpUnit(b.dataset.jump);}});
+$('#qindex').addEventListener('click',e=>{const b=e.target.closest('[data-qk]');if(b){sfx.tap();qi=+b.dataset.qk;renderQ();}});
 addEventListener('keydown',e=>{if(cur!=='play'||!q||solved||!$('#keys')||$('#keys').hidden)return;
   const AD='٠١٢٣٤٥٦٧٨٩';const d=/^[0-9]$/.test(e.key)?e.key:AD.indexOf(e.key)>=0?String(AD.indexOf(e.key)):{Backspace:'b',Enter:'ok'}[e.key];
   const b=d&&$(`#keys .key[data-d="${d}"]`);if(b){e.preventDefault();b.click();}});
